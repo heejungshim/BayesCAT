@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 ## Aim : This file contains perl script to take multiple alignment MCMC samples (output from BayesCAT) 
-## and compute pairwise posterior probability (to be used as input to FSA to summarize alignments)
+## and compute pairwise alignment posterior probability (to be used as input to FSA to summarize alignments)
 ## 
 ## Usage : perl compute.Pair.Post.Prob.pl fileNameforAlignments output.file.name
 ##

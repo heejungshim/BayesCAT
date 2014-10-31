@@ -100236,19 +100236,26 @@ int main(){
   int rank = 4;
   int np = 0;
 
+  /* clean1 start */
+  //int MClen = 1100000;   // length of Markov Chain with burning part
+  //int MClen2 = 1000000;  // length of Markov Chain without burning part
+  //int burnlen = 100000;  // length of Markov Chain for burning 
 
-  int MClen = 1100000;   // length of Markov Chain with burning part
-  int MClen2 = 1000000;  // length of Markov Chain without burning part
-  int burnlen = 100000;  // length of Markov Chain for burning 
+  int MClen = 1100;   // length of Markov Chain with burning part
+  int MClen2 = 1000;  // length of Markov Chain without burning part
+  int burnlen = 100;  // length of Markov Chain for burning 
+  /* clean1 end */
+
   int Fstburnlen = burnlen*3/4;
   int Sndburnlen = Fstburnlen/3;
 
 
 
-
+  /* clean1 start */
   int printIX = burnlen;
-  int printIV = 1000;
-
+  //int printIV = 1000;
+  int printIV = 10;
+  /* clean1 end */
 
   int tuningIXA = 100;
   int tuningIV = 100;

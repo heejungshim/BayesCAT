@@ -100560,6 +100560,8 @@ int main(){
   ofstream OtreeBL;
   ofstream OAlignment;
   
+  ofstream OIleninAll;
+  ofstream ODleninAll;
 
   ofstream OSPRonSubTree;
   ofstream OSPRonSubTreeLike;
@@ -100814,6 +100816,14 @@ int main(){
   temp = path + temp;
   temp = temp + Nm[rank];
   OmnumD.open(temp.c_str());
+  temp = "RESIleninAll";
+  temp = path + temp;
+  temp = temp + Nm[rank];
+  OIleninAll.open(temp.c_str());
+  temp = "RESDleninAll";
+  temp = path + temp;
+  temp = temp + Nm[rank];
+  ODleninAll.open(temp.c_str());
   temp = "RESmtotalEdgeLen";
   temp = path + temp;
   temp = temp + Nm[rank];
@@ -100890,6 +100900,8 @@ int main(){
 
 
 
+
+
   //outfile << "1" << seqDataS[0] << endl;
   //outfile << "2" << seqDataS[1] << endl;
   //outfile << "3" << seqDataS[2] << endl;
@@ -100927,6 +100939,8 @@ int main(){
   double psrf_numI, psrf_numD, psrf_Ilen, psrf_Dlen, psrf_totalEdgeLen;
   
 
+  vector<vector<double> > mcIleninAll(numSplits);
+  vector<vector<double> > mcDleninAll(numSplits);
 
 
   double uR, mR, m_R, s_R, b_R, w_R, psrf_R;
@@ -101003,7 +101017,6 @@ int main(){
   vector<double> MPIs_Kappa(np);
   vector<double> MPIm_Gamma(np);
   vector<double> MPIs_Gamma(np);
-
 
 
   vector<vector<double> > MPIm_numIinAll(numSplits);
@@ -101852,6 +101865,38 @@ int main(){
         OmnumIinAll << endl; 
         OmnumDinAll << endl;  
 
+        // print out indel fragment sizes for each split (insertion and deletion separately).
+        mcIleninAll.resize(numSplits);
+        mcDleninAll.resize(numSplits);
+        for(i = 0; i < numEdges; i++){
+           tmpIDH = TREE->getEdge(i)->getIDH();
+           int newi = TREE->GetSplitsIndex(TREE->getEdge(i), splits, midnum);
+           mcIleninAll[newi].resize(0);
+           mcDleninAll[newi].resize(0);  
+           for(j = 1; j <= tmpIDH->getNumE(); j++){
+             if(tmpIDH->getID(j) == 1){
+               mcIleninAll[newi].push_back(tmpIDH->getL(j));
+             }else{
+               mcDleninAll[newi].push_back(tmpIDH->getL(j));
+             }
+           }
+        }
+        
+        // for insertion fragment sizes
+        for(i = 0; i < numSplits; i++){
+            for(j = 0; j < mcIleninAll[i].size(); j++)
+              OIleninAll << mcIleninAll[i][j] << " ";
+            OIleninAll << "; ";
+        }
+        OIleninAll << endl;
+        // for deletion fragment sizes
+        for(i = 0; i < numSplits; i++){
+            for(j = 0; j < mcDleninAll[i].size(); j++)
+              ODleninAll << mcDleninAll[i][j] << " ";
+            ODleninAll << "; ";
+        }
+        ODleninAll << endl;
+       
 
         OmR << para.getR() << " ";
         OmRd << para.getRd() << " ";
@@ -101870,7 +101915,7 @@ int main(){
 
 
 
-     
+    
         // Summarize alignments
         alignS.resize(0);
         TREE->getAlignments(alignS);
@@ -102236,6 +102281,10 @@ int main(){
   psrf_numDinAll.resize(0); 
 
 
+  mcIleninAll.resize(0);
+  mcDleninAll.resize(0);
+ 
+
   MPIm_numI.resize(0);
   MPIs_numI.resize(0);
   MPIm_numD.resize(0);
@@ -102301,6 +102350,8 @@ int main(){
   OloglikeliIDH.close();
   OloglikeliEdges.close();
 
+  OIleninAll.close();
+  ODleninAll.close();
 
 
 

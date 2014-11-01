@@ -100492,13 +100492,13 @@ int main(){
       comb.resize(i);
       comb[0] = -1;
       while(enumerateCombinations(numLeaves, i, comb)){
-	intVec.resize(0);
-	for(j = 0; j < i ; j++)
-	  intVec.push_back((comb[j]));
-	splits.push_back(intVec);
+        intVec.resize(0);
+        for(j = 0; j < i ; j++)
+          intVec.push_back((comb[j]));
+        splits.push_back(intVec);
       }
     }
-
+    
     midnum = half;
   
   }else{             // even number
@@ -100508,10 +100508,10 @@ int main(){
       comb.resize(i);
       comb[0] = -1;
       while(enumerateCombinations(numLeaves, i, comb)){
-	intVec.resize(0);
-	for(j = 0; j < i ; j++)
-	  intVec.push_back(comb[j]);
-	splits.push_back(intVec);
+        intVec.resize(0);
+        for(j = 0; j < i ; j++)
+          intVec.push_back(comb[j]);
+        splits.push_back(intVec);
       }
     }    
     
@@ -100522,7 +100522,7 @@ int main(){
     while(enumerateCombinations(numLeaves, i, comb)){
       intVec.resize(0);
       for(j = 0; j < i ; j++)
-	intVec.push_back(comb[j]);
+        intVec.push_back(comb[j]);
       splits.push_back(intVec);
       m++;
     }    
@@ -100533,7 +100533,7 @@ int main(){
       m /= 2;
       
       for(i=0; i < m; i++)
-	splits.pop_back();
+        splits.pop_back();
     }
     
     midnum = half + 1;
@@ -100545,8 +100545,6 @@ int main(){
 
 
  
-
-
 
 
   //---------------------------------------------------//
@@ -100561,6 +100559,8 @@ int main(){
   ofstream Otree;
   ofstream OtreeBL;
   ofstream OAlignment;
+  
+
   ofstream OSPRonSubTree;
   ofstream OSPRonSubTreeLike;
   ofstream OSPRonSubTreeWithinWindow;
@@ -100601,7 +100601,7 @@ int main(){
   
   vector<vector<int> > alignS(0); // To save alignments
   
-  //string path = "/scratch/shim/project1/sim/run/L10N4_Debug/";  
+
   string path = "";
   string Nm(20, 'c');
   string temp;
@@ -101310,29 +101310,29 @@ int main(){
       
       
       if(rand.runif()-AP < 0){
-	//cout << "---------------------- Update ------------------------" << endl;
-	if(m >= burnlen){
-	  P_ac = P_ac + AP;
-	  I_ac = I_ac +1;
-	  if(is_element(SPRonSubIX, psNum)){
-	    for(int sh = 0; sh < 9; sh++){
-	      if(psNum == SPRonSubIX[sh]){
-		if(para.getSPRonSingle()==1){
-		  para.setPr((SizePslSet+sh), para.getPr((SizePslSet+sh))+AP);
-		  para.setIr((SizePslSet+sh), para.getIr((SizePslSet+sh))+1);
-		  num[SizePslSet+sh]++;
-		}else{
-		  para.setPr((psNum-1), para.getPr((psNum-1))+AP);
-		  para.setIr((psNum-1), para.getIr((psNum-1))+1);
-		  num[psNum-1]++;
-		}
-		break;
+        //cout << "---------------------- Update ------------------------" << endl;
+        if(m >= burnlen){
+          P_ac = P_ac + AP;
+          I_ac = I_ac +1;
+          if(is_element(SPRonSubIX, psNum)){
+            for(int sh = 0; sh < 9; sh++){
+              if(psNum == SPRonSubIX[sh]){
+                if(para.getSPRonSingle()==1){
+                  para.setPr((SizePslSet+sh), para.getPr((SizePslSet+sh))+AP);
+                  para.setIr((SizePslSet+sh), para.getIr((SizePslSet+sh))+1);
+                  num[SizePslSet+sh]++;
+                }else{
+                  para.setPr((psNum-1), para.getPr((psNum-1))+AP);
+                  para.setIr((psNum-1), para.getIr((psNum-1))+1);
+                  num[psNum-1]++;
+                }
+                break;
               }
             }
           }else{
-	    para.setPr((psNum-1), para.getPr((psNum-1))+AP);
-	    para.setIr((psNum-1), para.getIr((psNum-1))+1);
-	    num[psNum-1]++;
+            para.setPr((psNum-1), para.getPr((psNum-1))+AP);
+            para.setIr((psNum-1), para.getIr((psNum-1))+1);
+            num[psNum-1]++;
           }
 	  
 	  //if(psNum==2){
@@ -101351,106 +101351,105 @@ int main(){
 	  //  num[psNum-1]++;
           //}
        
-	}else if((m >= Fstburnlen) & (m < Sndburnlen)){
-
-	  // For tuning
-	  if(is_element(SPRonSubIX, psNum)){
-	    for(int sh = 0; sh < 9; sh++){
-	      if(psNum == SPRonSubIX[sh]){
-		if(para.getSPRonSingle()==1){
-		  para.setPrT((SizePslSet+sh), para.getPrT((SizePslSet+sh))+AP);
-		  para.setIrT((SizePslSet+sh), para.getIrT((SizePslSet+sh))+1);
-		  numT[SizePslSet+sh]++;
-		}else{
-		  para.setPrT((psNum-1), para.getPrT((psNum-1))+AP);
-		  para.setIrT((psNum-1), para.getIrT((psNum-1))+1);
-		  numT[psNum-1]++;
-		}
-		break;
-	      }
-	    }
-	  }else{
-	    para.setPrT((psNum-1), para.getPrT((psNum-1))+AP);
-	    para.setIrT((psNum-1), para.getIrT((psNum-1))+1);
-	    numT[psNum-1]++;
-	  }
-	}
-
-	TREE->save();
-
-      }else{
-	//cout << "---------------------- No Update ------------------------" << endl;
-	if(m >= burnlen){
-	  P_ac = P_ac + AP;
-	  if(is_element(SPRonSubIX, psNum)){
-	    for(int sh = 0; sh < 9; sh++){
-	      if(psNum == SPRonSubIX[sh]){
-		if(para.getSPRonSingle()==1){
-		  para.setPr((SizePslSet+sh), para.getPr((SizePslSet+sh))+AP);
-		  num[SizePslSet+sh]++;
-		}else{
-		  para.setPr((psNum-1), para.getPr((psNum-1))+AP);
-		  num[psNum-1]++;
-		}
-		break;
+        }else if((m >= Fstburnlen) & (m < Sndburnlen)){
+          
+          // For tuning
+          if(is_element(SPRonSubIX, psNum)){
+            for(int sh = 0; sh < 9; sh++){
+              if(psNum == SPRonSubIX[sh]){
+                if(para.getSPRonSingle()==1){
+                  para.setPrT((SizePslSet+sh), para.getPrT((SizePslSet+sh))+AP);
+                  para.setIrT((SizePslSet+sh), para.getIrT((SizePslSet+sh))+1);
+                  numT[SizePslSet+sh]++;
+                }else{
+                  para.setPrT((psNum-1), para.getPrT((psNum-1))+AP);
+                  para.setIrT((psNum-1), para.getIrT((psNum-1))+1);
+                  numT[psNum-1]++;
+                }
+                break;
               }
             }
           }else{
-	    para.setPr((psNum-1), para.getPr((psNum-1))+AP);
-	    num[psNum-1]++;
+            para.setPrT((psNum-1), para.getPrT((psNum-1))+AP);
+            para.setIrT((psNum-1), para.getIrT((psNum-1))+1);
+            numT[psNum-1]++;
+          }
+        }
+        
+        TREE->save();
+
+      }else{
+        //cout << "---------------------- No Update ------------------------" << endl;
+        if(m >= burnlen){
+          P_ac = P_ac + AP;
+          if(is_element(SPRonSubIX, psNum)){
+            for(int sh = 0; sh < 9; sh++){
+              if(psNum == SPRonSubIX[sh]){
+                if(para.getSPRonSingle()==1){
+                  para.setPr((SizePslSet+sh), para.getPr((SizePslSet+sh))+AP);
+                  num[SizePslSet+sh]++;
+                }else{
+                  para.setPr((psNum-1), para.getPr((psNum-1))+AP);
+                  num[psNum-1]++;
+                }
+                break;
+              }
+            }
+          }else{
+            para.setPr((psNum-1), para.getPr((psNum-1))+AP);
+            num[psNum-1]++;
           }
 
-	}else if((m >= Fstburnlen) & (m < Sndburnlen)){
-	  // For tuning
-	  if(is_element(SPRonSubIX, psNum)){
-	    for(int sh = 0; sh < 9; sh++){
-	      if(psNum == SPRonSubIX[sh]){
-		if(para.getSPRonSingle()==1){
-		  para.setPrT((SizePslSet+sh), para.getPrT((SizePslSet+sh))+AP);
-		  numT[SizePslSet+sh]++;
-		}else{
-		  para.setPrT((psNum-1), para.getPrT((psNum-1))+AP);
-		  numT[psNum-1]++;
-		}
-		break;
-	      }
-	    }
-	  }else{
-	    para.setPrT((psNum-1), para.getPrT((psNum-1))+AP);
-	    numT[psNum-1]++;
-	  }
+        }else if((m >= Fstburnlen) & (m < Sndburnlen)){
+          // For tuning
+          if(is_element(SPRonSubIX, psNum)){
+            for(int sh = 0; sh < 9; sh++){
+              if(psNum == SPRonSubIX[sh]){
+                if(para.getSPRonSingle()==1){
+                  para.setPrT((SizePslSet+sh), para.getPrT((SizePslSet+sh))+AP);
+                  numT[SizePslSet+sh]++;
+                }else{
+                  para.setPrT((psNum-1), para.getPrT((psNum-1))+AP);
+                  numT[psNum-1]++;
+                }
+                break;
+              }
+            }
+          }else{
+            para.setPrT((psNum-1), para.getPrT((psNum-1))+AP);
+            numT[psNum-1]++;
+          }
         }
-	TREE->restore();
-
+        TREE->restore();
       }
     
     }else{
-
+      
  
       if(m >= burnlen){
-
-	if(hyperup){
-	  P_ac = P_ac + para.getTmpDouble();
-	  I_ac = I_ac +1;
-	  para.setPr((psNum-1), para.getPr((psNum-1))+para.getTmpDouble());
-	  para.setIr((psNum-1), para.getIr((psNum-1))+1);
-	  num[psNum-1]++;
+        
+        if(hyperup){
+          P_ac = P_ac + para.getTmpDouble();
+          I_ac = I_ac +1;
+          para.setPr((psNum-1), para.getPr((psNum-1))+para.getTmpDouble());
+          para.setIr((psNum-1), para.getIr((psNum-1))+1);
+          num[psNum-1]++;
         }else{
-	  P_ac = P_ac + para.getTmpDouble();
-	  para.setPr((psNum-1), para.getPr((psNum-1))+para.getTmpDouble());
-	  num[psNum-1]++;
+          P_ac = P_ac + para.getTmpDouble();
+          para.setPr((psNum-1), para.getPr((psNum-1))+para.getTmpDouble());
+          num[psNum-1]++;
         }
-
+        
       }else if((m >= Fstburnlen) & (m < Sndburnlen)){
-
-	if(hyperup){
-	  para.setPrT((psNum-1), para.getPrT((psNum-1))+para.getTmpDouble());
-	  para.setIrT((psNum-1), para.getIrT((psNum-1))+1);
-	  numT[psNum-1]++;
-	}else{
-	  para.setPrT((psNum-1), para.getPrT((psNum-1))+para.getTmpDouble());
-	  numT[psNum-1]++;
-	}
+        
+        if(hyperup){
+          para.setPrT((psNum-1), para.getPrT((psNum-1))+para.getTmpDouble());
+          para.setIrT((psNum-1), para.getIrT((psNum-1))+1);
+          numT[psNum-1]++;
+        }else{
+          para.setPrT((psNum-1), para.getPrT((psNum-1))+para.getTmpDouble());
+          numT[psNum-1]++;
+        }
       }
     }
 
@@ -101483,22 +101482,22 @@ int main(){
       // UpR
       i = 7;
       if(numT[i] == tuningIX[i]){
-	
-	value = para.getR_c();
-	UpBoundAP = UpBoundAP_UpR;
-	LowBoundAP = LowBoundAP_UpR;
-	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1-tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1+tuningInc);
-	
-	para.setR_c(value);
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
-	
+        
+        value = para.getR_c();
+        UpBoundAP = UpBoundAP_UpR;
+        LowBoundAP = LowBoundAP_UpR;
+        
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1-tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1+tuningInc);
+        
+        para.setR_c(value);
+        
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
+        
       }
       
       
@@ -101506,21 +101505,21 @@ int main(){
       // UpRd
       i = 8;
       if(numT[i] == tuningIX[i]){
+        
+        value = para.getRd_c();
+        UpBoundAP = UpBoundAP_UpRd;
+        LowBoundAP = LowBoundAP_UpRd;
+        
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1-tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1+tuningInc);
+        
+        para.setRd_c(value);
 	
-	value = para.getRd_c();
-	UpBoundAP = UpBoundAP_UpRd;
-	LowBoundAP = LowBoundAP_UpRd;
-	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1-tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1+tuningInc);
-	
-	para.setRd_c(value);
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
 	
       }
       
@@ -101528,22 +101527,22 @@ int main(){
       // UpPi
       i = 12;
       if(numT[i] == tuningIX[i]){
+        
+        value = para.getPi_c();
+        UpBoundAP = UpBoundAP_UpPi;
+        LowBoundAP = LowBoundAP_UpPi;
+        
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1-tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1+tuningInc);
+        
+        para.setPi_c(value);
 	
-	value = para.getPi_c();
-	UpBoundAP = UpBoundAP_UpPi;
-	LowBoundAP = LowBoundAP_UpPi;
-	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1-tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1+tuningInc);
-	
-	para.setPi_c(value);
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
-	
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
+        
       }
       
       
@@ -101551,21 +101550,21 @@ int main(){
       i = 9;
       
       if(numT[i] == tuningIX[i]){
+        
+        value = para.getLambda_c();
+        UpBoundAP = UpBoundAP_UpLambda;
+        LowBoundAP = LowBoundAP_UpLambda;
+        
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1+tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1-tuningInc);
+        
+        para.setLambda_c(value);
 	
-	value = para.getLambda_c();
-	UpBoundAP = UpBoundAP_UpLambda;
-	LowBoundAP = LowBoundAP_UpLambda;
-	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1+tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1-tuningInc);
-	
-	para.setLambda_c(value);
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
 	
       }
       
@@ -101573,21 +101572,21 @@ int main(){
       i = 10;
       if(numT[i] == tuningIX[i]){
 	
-	value = para.getKappa_c();
-	UpBoundAP = UpBoundAP_UpKappa;
-	LowBoundAP = LowBoundAP_UpKappa;
+        value = para.getKappa_c();
+        UpBoundAP = UpBoundAP_UpKappa;
+        LowBoundAP = LowBoundAP_UpKappa;
+        
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1+tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1-tuningInc);
 	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1+tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1-tuningInc);
-	
-	para.setKappa_c(value);
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
-	
+        para.setKappa_c(value);
+        
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
+        
       }
       
       
@@ -101595,21 +101594,21 @@ int main(){
       i = 11;
       if(numT[i] == tuningIX[i]){
 	
-	value = para.getGamma_c();
-	UpBoundAP = UpBoundAP_UpGamma;
-	LowBoundAP = LowBoundAP_UpGamma;
+        value = para.getGamma_c();
+        UpBoundAP = UpBoundAP_UpGamma;
+        LowBoundAP = LowBoundAP_UpGamma;
 	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1+tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1-tuningInc);
-	
-	para.setGamma_c(value);
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
-	
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1+tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1-tuningInc);
+        
+        para.setGamma_c(value);
+        
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
+        
       }
       
       
@@ -101618,21 +101617,21 @@ int main(){
       i = 3;
       if(numT[i] == tuningIX[i]){
 	
-	value = para.getZeta();
-	UpBoundAP = UpBoundAP_UpEdgeLen;
-	LowBoundAP = LowBoundAP_UpEdgeLen;
+        value = para.getZeta();
+        UpBoundAP = UpBoundAP_UpEdgeLen;
+        LowBoundAP = LowBoundAP_UpEdgeLen;
 	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1+tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1-tuningInc);
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1+tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1-tuningInc);
 	
-	para.setZeta(value);
+        para.setZeta(value);
 	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
-	
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
+        
       }
       
       
@@ -101643,21 +101642,21 @@ int main(){
       if(numT[i] == tuningIX[i]){
 
 	
-	value = para.getWindowLen_UpIDHonEdge();
-	UpBoundAP = UpBoundAP_windowLen_UpIDHonEdge;
-	LowBoundAP = LowBoundAP_windowLen_UpIDHonEdge;
+        value = para.getWindowLen_UpIDHonEdge();
+        UpBoundAP = UpBoundAP_windowLen_UpIDHonEdge;
+        LowBoundAP = LowBoundAP_windowLen_UpIDHonEdge;
 	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	//cout << "i : " << i << " value : " << value << " UpBoundAP : " << UpBoundAP << " LowBoundAP : " << LowBoundAP << endl;
-	if(double_tmp > UpBoundAP)
-	  value *= (1+tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1-tuningInc);
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        //cout << "i : " << i << " value : " << value << " UpBoundAP : " << UpBoundAP << " LowBoundAP : " << LowBoundAP << endl;
+        if(double_tmp > UpBoundAP)
+          value *= (1+tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1-tuningInc);
+        
+        para.setWindowLen_UpIDHonEdge(MAX(value, MINwindowLen));
 	
-	para.setWindowLen_UpIDHonEdge(MAX(value, MINwindowLen));
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
 	
       }
       
@@ -101666,41 +101665,41 @@ int main(){
       i = 6;
       if(numT[i] == tuningIX[i]){
 	
-	value = para.getWindowLen_UpIDHonEdgeLike();
-	UpBoundAP = UpBoundAP_windowLen_UpIDHonEdgeLike;
-	LowBoundAP = LowBoundAP_windowLen_UpIDHonEdgeLike;
+        value = para.getWindowLen_UpIDHonEdgeLike();
+        UpBoundAP = UpBoundAP_windowLen_UpIDHonEdgeLike;
+        LowBoundAP = LowBoundAP_windowLen_UpIDHonEdgeLike;
+        
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1+tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1-tuningInc);
+        
+        para.setWindowLen_UpIDHonEdgeLike(MAX(value, MINwindowLen));
 	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1+tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1-tuningInc);
-	
-	para.setWindowLen_UpIDHonEdgeLike(MAX(value, MINwindowLen));
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
-	
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
+        
       }
       
       // SPRonSubTreeWithinWindowGivenWindowLen
       i = 13;
       if(numT[i] == tuningIX[i]){
 	
-	value = para.getWindowLen_SPRonSubTreeWithinWindow();
-	UpBoundAP = UpBoundAP_windowLen_SPRonSubTreeWithinWindow;
-	LowBoundAP = LowBoundAP_windowLen_SPRonSubTreeWithinWindow;
-	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1+tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1-tuningInc);
-	
-	para.setWindowLen_SPRonSubTreeWithinWindow(MAX(value, MINwindowLen));
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
+        value = para.getWindowLen_SPRonSubTreeWithinWindow();
+        UpBoundAP = UpBoundAP_windowLen_SPRonSubTreeWithinWindow;
+        LowBoundAP = LowBoundAP_windowLen_SPRonSubTreeWithinWindow;
+        
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1+tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1-tuningInc);
+        
+        para.setWindowLen_SPRonSubTreeWithinWindow(MAX(value, MINwindowLen));
+        
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
 	
       }
       
@@ -101708,20 +101707,20 @@ int main(){
       i = 15;
       if(numT[i] == tuningIX[i]){
 	
-	value = para.getWindowLen_SPRonSubTreeWithTargetWithinWindow();
-	UpBoundAP = UpBoundAP_windowLen_SPRonSubTreeWithTargetWithinWindow;
-	LowBoundAP = LowBoundAP_windowLen_SPRonSubTreeWithTargetWithinWindow;
+        value = para.getWindowLen_SPRonSubTreeWithTargetWithinWindow();
+        UpBoundAP = UpBoundAP_windowLen_SPRonSubTreeWithTargetWithinWindow;
+        LowBoundAP = LowBoundAP_windowLen_SPRonSubTreeWithTargetWithinWindow;
 	
-	double_tmp = para.getPrT(i)/(double)numT[i];
-	if(double_tmp > UpBoundAP)
-	  value *= (1+tuningInc);
-	else if(double_tmp < LowBoundAP)
-	  value *= (1-tuningInc);
+        double_tmp = para.getPrT(i)/(double)numT[i];
+        if(double_tmp > UpBoundAP)
+          value *= (1+tuningInc);
+        else if(double_tmp < LowBoundAP)
+          value *= (1-tuningInc);
+        
+        para.setWindowLen_SPRonSubTreeWithTargetWithinWindow(MAX(value, MINwindowLen));
 	
-	para.setWindowLen_SPRonSubTreeWithTargetWithinWindow(MAX(value, MINwindowLen));
-	
-	cout << i << " " << double_tmp << " " << value << endl;
-	tuningIX[i] += tuningIV;
+        cout << i << " " << double_tmp << " " << value << endl;
+        tuningIX[i] += tuningIV;
 	
       }
       
@@ -101762,9 +101761,9 @@ int main(){
       totalEdgeLen = 0;
 
       for(i = 0; i < numSplits; i++){
-	numIinAll[i] = -1;
-	numDinAll[i] = -1;
-	edgeLen[i] = -1;
+        numIinAll[i] = -1;
+        numDinAll[i] = -1;
+        edgeLen[i] = -1;
       }
 
       uR += para.getR();
@@ -101775,56 +101774,56 @@ int main(){
       uKappa += para.getKappa();
       uLambda += para.getLambda();
       for(i = 0; i < 4; i++)
-	uPi[i] += para.getPi(i);
+        uPi[i] += para.getPi(i);
 
       
 
       for(i = 0; i < numEdges; i++){
-	tmpIDH = TREE->getEdge(i)->getIDH();
-	int newi = TREE->GetSplitsIndex(TREE->getEdge(i), splits, midnum);
-	numIinAll[newi] = 0;
-	numDinAll[newi] = 0;
-	for(j = 1; j <= tmpIDH->getNumE(); j++){
-	  if(tmpIDH->getID(j) == 1){
-	    unumIinAll[newi]++;
-	    unumI++;
-	    dIlen++;
-	    uIlen += tmpIDH->getL(j);
-	    numI++;
-	    numIinAll[newi]++;
-	    k_Ilen++;
-	    if(k_Ilen == 1){
-	      m_Ilen = tmpIDH->getL(j);
-	      s_Ilen= 0;
-	    }else{
-	      tempmean = m_Ilen + (1/(double)(k_Ilen))*(tmpIDH->getL(j) - m_Ilen);
-	      s_Ilen = s_Ilen+ (tmpIDH->getL(j) - m_Ilen)*(tmpIDH->getL(j) - tempmean);
-	      m_Ilen = tempmean;
-	    }
-	  }else{
-	    unumDinAll[newi]++;
-	    unumD++;
-	    dDlen++;
-	    uDlen += tmpIDH->getL(j);
-	    numD++;
-	    numDinAll[newi]++;
-	    k_Dlen++;
-	    if(k_Dlen == 1){
-	      m_Dlen = tmpIDH->getL(j);
-	      s_Dlen= 0;
-	    }else{
-	      tempmean = m_Dlen + (1/(double)(k_Dlen))*(tmpIDH->getL(j) - m_Dlen);
-	      s_Dlen = s_Dlen+ (tmpIDH->getL(j) - m_Dlen)*(tmpIDH->getL(j) - tempmean);
-	      m_Dlen = tempmean;
-	    }
+        tmpIDH = TREE->getEdge(i)->getIDH();
+        int newi = TREE->GetSplitsIndex(TREE->getEdge(i), splits, midnum);
+        numIinAll[newi] = 0;
+        numDinAll[newi] = 0;
+        for(j = 1; j <= tmpIDH->getNumE(); j++){
+          if(tmpIDH->getID(j) == 1){
+            unumIinAll[newi]++;
+            unumI++;
+            dIlen++;
+            uIlen += tmpIDH->getL(j);
+            numI++;
+            numIinAll[newi]++;
+            k_Ilen++;
+            if(k_Ilen == 1){
+              m_Ilen = tmpIDH->getL(j);
+              s_Ilen= 0;
+            }else{
+              tempmean = m_Ilen + (1/(double)(k_Ilen))*(tmpIDH->getL(j) - m_Ilen);
+              s_Ilen = s_Ilen+ (tmpIDH->getL(j) - m_Ilen)*(tmpIDH->getL(j) - tempmean);
+              m_Ilen = tempmean;
+            }
+          }else{
+            unumDinAll[newi]++;
+            unumD++;
+            dDlen++;
+            uDlen += tmpIDH->getL(j);
+            numD++;
+            numDinAll[newi]++;
+            k_Dlen++;
+            if(k_Dlen == 1){
+              m_Dlen = tmpIDH->getL(j);
+              s_Dlen= 0;
+            }else{
+              tempmean = m_Dlen + (1/(double)(k_Dlen))*(tmpIDH->getL(j) - m_Dlen);
+              s_Dlen = s_Dlen+ (tmpIDH->getL(j) - m_Dlen)*(tmpIDH->getL(j) - tempmean);
+              m_Dlen = tempmean;
+            }
           }
-	}
+        }
 
-	numEachSplit[newi]++;
-	edgeLen[newi] = TREE->getEdge(i)->getEdgeLen();
-	uedgeLen[newi] += edgeLen[newi];
-	utotalEdgeLen += edgeLen[newi];
-	totalEdgeLen += edgeLen[newi];
+        numEachSplit[newi]++;
+        edgeLen[newi] = TREE->getEdge(i)->getEdgeLen();
+        uedgeLen[newi] += edgeLen[newi];
+        utotalEdgeLen += edgeLen[newi];
+        totalEdgeLen += edgeLen[newi];
       } // End of "for(i = 0; i < numEdges; i++)"
 
 
@@ -101836,57 +101835,57 @@ int main(){
 
 
 
-	OthetaPrior << TREE->calPriorParas(para) << " ";
-	OloglikeliData << TREE->getLogLikeliData() << " ";
-	OloglikeliIDH << TREE->getLogLikeliIDH() << " ";
-	OloglikeliEdges << TREE->CalculatelogLikeliEdges(para) << " ";
-	OmnumI << numI << " ";
-	OmnumD << numD << " ";
-	OtotalEdgeLen << totalEdgeLen << " ";
+        OthetaPrior << TREE->calPriorParas(para) << " ";
+        OloglikeliData << TREE->getLogLikeliData() << " ";
+        OloglikeliIDH << TREE->getLogLikeliIDH() << " ";
+        OloglikeliEdges << TREE->CalculatelogLikeliEdges(para) << " ";
+        OmnumI << numI << " ";
+        OmnumD << numD << " ";
+        OtotalEdgeLen << totalEdgeLen << " ";
 
-	for(i = 0; i < numSplits; i++){
-	  OmedgeLen << edgeLen[i] << " "; 
-	  OmnumIinAll << numIinAll[i] << " "; 
-	  OmnumDinAll << numDinAll[i] << " ";  
-	}
-	OmedgeLen << endl; 
-	OmnumIinAll << endl; 
-	OmnumDinAll << endl;  
+        for(i = 0; i < numSplits; i++){
+          OmedgeLen << edgeLen[i] << " "; 
+          OmnumIinAll << numIinAll[i] << " "; 
+          OmnumDinAll << numDinAll[i] << " ";  
+        }
+        OmedgeLen << endl; 
+        OmnumIinAll << endl; 
+        OmnumDinAll << endl;  
 
 
-	OmR << para.getR() << " ";
-	OmRd << para.getRd() << " ";
-	OmRi << para.getRi() << " ";
-	OmMu << para.getMu() << " ";
-	OmGamma << para.getGamma() << " ";
-	OmKappa << para.getKappa() << " ";
-	OmLambda << para.getLambda() << " ";
-	for(i = 0; i < 4; i++){
-	  OmP << para.getPi(i) << " ";
-	}
-	OmP << endl;
+        OmR << para.getR() << " ";
+        OmRd << para.getRd() << " ";
+        OmRi << para.getRi() << " ";
+        OmMu << para.getMu() << " ";
+        OmGamma << para.getGamma() << " ";
+        OmKappa << para.getKappa() << " ";
+        OmLambda << para.getLambda() << " ";
+        for(i = 0; i < 4; i++){
+          OmP << para.getPi(i) << " ";
+        }
+        OmP << endl;
 
-	TREE->print(Otree);
-	TREE->printBL(OtreeBL);    
+        TREE->print(Otree);
+        TREE->printBL(OtreeBL);    
 
 
 
      
-      // Summarize alignments
-      alignS.resize(0);
-      TREE->getAlignments(alignS);
-      //cout << "BBB : " << alignS.size() << endl;
-      //TREE->printTree();
-      OAlignment << ">alignment " << m-burnlen << endl;
-      TREE->printAlignmentsPosi_v2(OAlignment, alignS);
-      //TREE->printAlignments(OAlignment, alignS);
-      //cout << "CCC" << endl;
-      //TREE_HMG->constructHMGTree(alignS);
-      //cout << "HHH" << endl;
-      alignS.resize(0);
+        // Summarize alignments
+        alignS.resize(0);
+        TREE->getAlignments(alignS);
+        //cout << "BBB : " << alignS.size() << endl;
+        //TREE->printTree();
+        OAlignment << ">alignment " << m-burnlen << endl;
+        TREE->printAlignmentsPosi_v2(OAlignment, alignS);
+        //TREE->printAlignments(OAlignment, alignS);
+        //cout << "CCC" << endl;
+        //TREE_HMG->constructHMGTree(alignS);
+        //cout << "HHH" << endl;
+        alignS.resize(0);
 
 
-	printIX += printIV;
+        printIX += printIV;
       
       } // End of "if(printIX == m)"
 
@@ -101896,111 +101895,111 @@ int main(){
       // Start of calculating mean and sd
       k_numID++;
       if(k_numID == 1){
-	m_numI = numI;
-	s_numI = 0;
-	m_numD = numD;
-	s_numD = 0;
-	m_totalEdgeLen = totalEdgeLen;
-	s_totalEdgeLen = 0;
-
-	m_R = para.getR();
-	s_R = 0;
-	m_Ri = para.getRi();
-	s_Ri = 0;
-	m_Rd = para.getRd();
-	s_Rd = 0;
-	m_Lambda = para.getLambda();
-	s_Lambda = 0;
-	m_Mu = para.getMu();
-	s_Mu = 0;
-	m_Kappa = para.getKappa();
-	s_Kappa = 0;
-	m_Gamma = para.getGamma();
-	s_Gamma = 0;
+        m_numI = numI;
+        s_numI = 0;
+        m_numD = numD;
+        s_numD = 0;
+        m_totalEdgeLen = totalEdgeLen;
+        s_totalEdgeLen = 0;
+        
+        m_R = para.getR();
+        s_R = 0;
+        m_Ri = para.getRi();
+        s_Ri = 0;
+        m_Rd = para.getRd();
+        s_Rd = 0;
+        m_Lambda = para.getLambda();
+        s_Lambda = 0;
+        m_Mu = para.getMu();
+        s_Mu = 0;
+        m_Kappa = para.getKappa();
+        s_Kappa = 0;
+        m_Gamma = para.getGamma();
+        s_Gamma = 0;
 	
 
-	for( i = 0; i < numLeaves ; i++){ 
-	  m_numIinAll[i] = numIinAll[i];
-	  m_numDinAll[i] = numDinAll[i];
-	  m_edgeLen[i] = edgeLen[i];
-	  s_numIinAll[i] = 0;
-	  s_numDinAll[i] = 0;
-	  s_edgeLen[i] = 0;	  
-	}
+        for( i = 0; i < numLeaves ; i++){ 
+          m_numIinAll[i] = numIinAll[i];
+          m_numDinAll[i] = numDinAll[i];
+          m_edgeLen[i] = edgeLen[i];
+          s_numIinAll[i] = 0;
+          s_numDinAll[i] = 0;
+          s_edgeLen[i] = 0;	  
+        }
 
-	for(i = 0; i < 4; i++){
-	  m_Pi[i] = para.getPi(i);
-	  s_Pi[i] = 0;
-	}
+        for(i = 0; i < 4; i++){
+          m_Pi[i] = para.getPi(i);
+          s_Pi[i] = 0;
+        }
 
 
       }else{
 
-	tempmean = m_numI + (1/(double)(k_numID))*(numI - m_numI);
-	s_numI = s_numI + (numI - m_numI)*(numI- tempmean);
-	m_numI = tempmean;
-	
-	tempmean = m_numD + (1/(double)(k_numID))*(numD - m_numD);
-	s_numD = s_numD + (numD - m_numD)*(numD- tempmean);
-	m_numD = tempmean;
+        tempmean = m_numI + (1/(double)(k_numID))*(numI - m_numI);
+        s_numI = s_numI + (numI - m_numI)*(numI- tempmean);
+        m_numI = tempmean;
+        
+        tempmean = m_numD + (1/(double)(k_numID))*(numD - m_numD);
+        s_numD = s_numD + (numD - m_numD)*(numD- tempmean);
+        m_numD = tempmean;
+        
+        tempmean = m_totalEdgeLen + (1/(double)(k_numID))*(totalEdgeLen - m_totalEdgeLen);
+        s_totalEdgeLen = s_totalEdgeLen + (totalEdgeLen - m_totalEdgeLen)*(totalEdgeLen- tempmean);
+        m_totalEdgeLen = tempmean;
 
-	tempmean = m_totalEdgeLen + (1/(double)(k_numID))*(totalEdgeLen - m_totalEdgeLen);
-	s_totalEdgeLen = s_totalEdgeLen + (totalEdgeLen - m_totalEdgeLen)*(totalEdgeLen- tempmean);
-	m_totalEdgeLen = tempmean;
-
-	tempmean = m_R + (1/(double)(k_numID))*(para.getR() - m_R);
-	s_R = s_R + (para.getR() - m_R)*(para.getR() - tempmean);
-	m_R = tempmean;
-
-
-	tempmean = m_Rd + (1/(double)(k_numID))*(para.getRd() - m_Rd);
-	s_Rd = s_Rd + (para.getRd() - m_Rd)*(para.getRd() - tempmean);
-	m_Rd = tempmean;
+        tempmean = m_R + (1/(double)(k_numID))*(para.getR() - m_R);
+        s_R = s_R + (para.getR() - m_R)*(para.getR() - tempmean);
+        m_R = tempmean;
 
 
-	tempmean = m_Ri + (1/(double)(k_numID))*(para.getRi() - m_Ri);
-	s_Ri = s_Ri + (para.getRi() - m_Ri)*(para.getRi() - tempmean);
-	m_Ri = tempmean;
+        tempmean = m_Rd + (1/(double)(k_numID))*(para.getRd() - m_Rd);
+        s_Rd = s_Rd + (para.getRd() - m_Rd)*(para.getRd() - tempmean);
+        m_Rd = tempmean;
 
 
-	tempmean = m_Lambda + (1/(double)(k_numID))*(para.getLambda() - m_Lambda);
-	s_Lambda = s_Lambda + (para.getLambda() - m_Lambda)*(para.getLambda() - tempmean);
-	m_Lambda = tempmean;
+        tempmean = m_Ri + (1/(double)(k_numID))*(para.getRi() - m_Ri);
+        s_Ri = s_Ri + (para.getRi() - m_Ri)*(para.getRi() - tempmean);
+        m_Ri = tempmean;
 
 
-	tempmean = m_Mu + (1/(double)(k_numID))*(para.getMu() - m_Mu);
-	s_Mu = s_Mu + (para.getMu() - m_Mu)*(para.getMu() - tempmean);
-	m_Mu = tempmean;
+        tempmean = m_Lambda + (1/(double)(k_numID))*(para.getLambda() - m_Lambda);
+        s_Lambda = s_Lambda + (para.getLambda() - m_Lambda)*(para.getLambda() - tempmean);
+        m_Lambda = tempmean;
 
 
-	tempmean = m_Gamma + (1/(double)(k_numID))*(para.getGamma() - m_Gamma);
-	s_Gamma = s_Gamma + (para.getGamma() - m_Gamma)*(para.getGamma() - tempmean);
-	m_Gamma = tempmean;
+        tempmean = m_Mu + (1/(double)(k_numID))*(para.getMu() - m_Mu);
+        s_Mu = s_Mu + (para.getMu() - m_Mu)*(para.getMu() - tempmean);
+        m_Mu = tempmean;
 
 
-	tempmean = m_Kappa + (1/(double)(k_numID))*(para.getKappa() - m_Kappa);
-	s_Kappa = s_Kappa + (para.getKappa() - m_Kappa)*(para.getKappa() - tempmean);
-	m_Kappa = tempmean;
+        tempmean = m_Gamma + (1/(double)(k_numID))*(para.getGamma() - m_Gamma);
+        s_Gamma = s_Gamma + (para.getGamma() - m_Gamma)*(para.getGamma() - tempmean);
+        m_Gamma = tempmean;
 
-	for( i = 0; i < 4 ; i++){ 
-	  tempmean = m_Pi[i] + (1/(double)(k_numID))*(para.getPi(i) - m_Pi[i]);
-	  s_Pi[i] = s_Pi[i]+ (para.getPi(i) - m_Pi[i])*(para.getPi(i) - tempmean);
-	  m_Pi[i] = tempmean;
-	}
 
-	for( i = 0; i < numLeaves ; i++){ 
-	  tempmean = m_numIinAll[i] + (1/(double)(k_numID))*(numIinAll[i] - m_numIinAll[i]);
-	  s_numIinAll[i] = s_numIinAll[i]+ (numIinAll[i] - m_numIinAll[i])*(numIinAll[i] - tempmean);
-	  m_numIinAll[i] = tempmean;
+        tempmean = m_Kappa + (1/(double)(k_numID))*(para.getKappa() - m_Kappa);
+        s_Kappa = s_Kappa + (para.getKappa() - m_Kappa)*(para.getKappa() - tempmean);
+        m_Kappa = tempmean;
 
-	  tempmean = m_numDinAll[i] + (1/(double)(k_numID))*(numDinAll[i] - m_numDinAll[i]);
-	  s_numDinAll[i] = s_numDinAll[i]+ (numDinAll[i] - m_numDinAll[i])*(numDinAll[i] - tempmean);
-	  m_numDinAll[i] = tempmean;
+        for( i = 0; i < 4 ; i++){ 
+          tempmean = m_Pi[i] + (1/(double)(k_numID))*(para.getPi(i) - m_Pi[i]);
+          s_Pi[i] = s_Pi[i]+ (para.getPi(i) - m_Pi[i])*(para.getPi(i) - tempmean);
+          m_Pi[i] = tempmean;
+        }
 
-	  tempmean = m_edgeLen[i] + (1/(double)(k_numID))*(edgeLen[i] - m_edgeLen[i]);
-	  s_edgeLen[i] = s_edgeLen[i]+ (edgeLen[i] - m_edgeLen[i])*(edgeLen[i] - tempmean);
-	  m_edgeLen[i] = tempmean;	  
-	}
+        for( i = 0; i < numLeaves ; i++){ 
+          tempmean = m_numIinAll[i] + (1/(double)(k_numID))*(numIinAll[i] - m_numIinAll[i]);
+          s_numIinAll[i] = s_numIinAll[i]+ (numIinAll[i] - m_numIinAll[i])*(numIinAll[i] - tempmean);
+          m_numIinAll[i] = tempmean;
+          
+          tempmean = m_numDinAll[i] + (1/(double)(k_numID))*(numDinAll[i] - m_numDinAll[i]);
+          s_numDinAll[i] = s_numDinAll[i]+ (numDinAll[i] - m_numDinAll[i])*(numDinAll[i] - tempmean);
+          m_numDinAll[i] = tempmean;
+
+          tempmean = m_edgeLen[i] + (1/(double)(k_numID))*(edgeLen[i] - m_edgeLen[i]);
+          s_edgeLen[i] = s_edgeLen[i]+ (edgeLen[i] - m_edgeLen[i])*(edgeLen[i] - tempmean);
+          m_edgeLen[i] = tempmean;	  
+        }
       } // End of calculating mean and sd
 
    
@@ -102008,7 +102007,7 @@ int main(){
 
 
   } // End of "for( m = 0; m<MClen; m++)"
-
+  
 
 
 

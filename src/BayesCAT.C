@@ -101886,14 +101886,14 @@ int main(){
         for(i = 0; i < numSplits; i++){
             for(j = 0; j < mcIleninAll[i].size(); j++)
               OIleninAll << mcIleninAll[i][j] << " ";
-            OIleninAll << "; ";
+            OIleninAll << ";";
         }
         OIleninAll << endl;
         // for deletion fragment sizes
         for(i = 0; i < numSplits; i++){
             for(j = 0; j < mcDleninAll[i].size(); j++)
               ODleninAll << mcDleninAll[i][j] << " ";
-            ODleninAll << "; ";
+            ODleninAll << ";";
         }
         ODleninAll << endl;
        

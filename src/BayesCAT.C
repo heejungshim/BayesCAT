@@ -100276,15 +100276,26 @@ int main(){
 
   Parameters para;
 
+  /* clean2 start */
+  //double kappa = 2;
+  //double gamma = 2; 
+  //double rd = 1/(double)6;
+  //double r =  1/(double)123;
+  //double lambda = 0.005;
+  //double pA = 0.19;
+  //double pC = 0.31;
+  //double pG = 0.33;  
 
   double kappa = 2;
-  double gamma = 2; 
-  double rd = 1/(double)6;
-  double r =  1/(double)123;
-  double lambda = 0.005;
-  double pA = 0.19;
-  double pC = 0.31;
-  double pG = 0.33;  
+  double gamma = 6.5;
+  double rd = 1/(double)4;
+  double r =  1/(double)50;
+  double lambda = 0.05;
+  double pA = 0.18;
+  double pC = 0.32;
+  double pG = 0.17;   
+  /* clean2 end */
+
   double pT = 1 - pA - pC - pG;
   vector<double> pi(4);
   pi[0] = pA;
@@ -100299,17 +100310,41 @@ int main(){
   para.setKappa(kappa);
 
 
-
-  double t_kappa = 2;
-  double t_gamma = 2; 
+  /* clean2 start */
+  //double t_kappa = 2;
+  //double t_gamma = 2; 
   //double t_rd = 0.9875;
   //double t_r =   0.2;
-  double t_lambda = 0.005;
-  double piA = 0.19;
-  double piC = 0.31;
-  double piG = 0.33;   
+  //double t_lambda = 0.005;
+  //double piA = 0.19;
+  //double piC = 0.31;
+  //double piG = 0.33;   
+  //double piT = 1 - piA - piC - piG;
+  //double pi_overVar = 70; // larger means small variance.
+  //double gamma_epsilon = 1/t_gamma;
+  //double kappa_epsilon = 1/t_kappa;
+  //double lambda_epsilon = 1/t_lambda;
+  //vector<double> pi_alpha(4);
+  //pi_alpha[0] = piA*pi_overVar;
+  //pi_alpha[1] = piC*pi_overVar;
+  //pi_alpha[2] = piG*pi_overVar;
+  //pi_alpha[3] = piT*pi_overVar;
+  //double r_alpha = 100;
+  //double r_beta = 12200;
+  //double rd_alpha = 3;
+  //double rd_beta = 15;
+  //double rd_epsilon = 0.5;
+  //double gamma_alpha = 5;
+  //double gamma_beta = 1;
+
+  double t_kappa = 2;
+  double t_gamma = 6.5; 
+  double t_lambda = 0.05;
+  double piA = 0.18;
+  double piC = 0.32;
+  double piG = 0.17;   
   double piT = 1 - piA - piC - piG;
-  double pi_overVar = 70; // larger means small variance.
+  double pi_overVar = 5; // larger means small variance.
   double gamma_epsilon = 1/t_gamma;
   double kappa_epsilon = 1/t_kappa;
   double lambda_epsilon = 1/t_lambda;
@@ -100318,13 +100353,11 @@ int main(){
   pi_alpha[1] = piC*pi_overVar;
   pi_alpha[2] = piG*pi_overVar;
   pi_alpha[3] = piT*pi_overVar;
-  double r_alpha = 100;
-  double r_beta = 12200;
-  double rd_alpha = 3;
-  double rd_beta = 15;
-  //double rd_epsilon = 0.5;
-  //double gamma_alpha = 5;
-  //double gamma_beta = 1;
+  double r_alpha = 2;
+  double r_beta = 98;
+  double rd_alpha = 4;
+  double rd_beta = 12;
+  /* clean2 end */
 
 
   double r_c =  10000000;
@@ -100449,11 +100482,21 @@ int main(){
 
   vector<string> seqDataS(0);
 
-  seqDataS.push_back("TGCCTGGCGGCCGTAGCGCGGTGGTCCCACCTGACCCCATGCCGAACTCAGAAGTGAAACGCCGTAGCGCCGATGGTAGTGTGGGGTCTCCCCATGCGAGAGTAGGGAACTGCCAGGCAT");
-  seqDataS.push_back("GTCTACGGCCATACCACCCTGAACGCGCCCGATCTCGTCTGATCTCGGAAGCTAAGCAGGGTCGGGCCTGGTTAGTACTTGGATGGGAGACCGCCTGGGAATACCGGGTGCTGTAGGCTTT");
-  seqDataS.push_back("TTAAGGCGGCCATAGCGGTGGGGTTACTCCCGTACCCATCCCGAACACGGAAGATAAGCCCGCCTGCGTTCCGGTCAGTACTGGAGTGCGAGCCTCTGGGAAATCCGGTTCGCCGCCTAC");
-  seqDataS.push_back("GGTACGGCGGTCATAGCGGGGGGGCCACACCCGGTCTCATTTCGAACCCGGAAGTTAAGCCCCCCAGCGATCCCGGCTGTACTGCCCTCCGAGAGGGGGCGGGAACCGGGGACGCCGCCGGCCA");
-  seqDataS.push_back("GCCCACCCGGTCACAGTGAGCGGGCAACACCCGGACTCATTTCGAACCCGGAAGTTAAGCCGCTCACGTTAGTGGGGCCGTGGATACCGTGAGGATCCGCAGCCCCACTAAGCTGGGATGGGTTTT");
+  /* clean2 start */
+  //seqDataS.push_back("TGCCTGGCGGCCGTAGCGCGGTGGTCCCACCTGACCCCATGCCGAACTCAGAAGTGAAACGCCGTAGCGCCGATGGTAGTGTGGGGTCTCCCCATGCGAGAGTAGGGAACTGCCAGGCAT");
+  //seqDataS.push_back("GTCTACGGCCATACCACCCTGAACGCGCCCGATCTCGTCTGATCTCGGAAGCTAAGCAGGGTCGGGCCTGGTTAGTACTTGGATGGGAGACCGCCTGGGAATACCGGGTGCTGTAGGCTTT");
+  //seqDataS.push_back("TTAAGGCGGCCATAGCGGTGGGGTTACTCCCGTACCCATCCCGAACACGGAAGATAAGCCCGCCTGCGTTCCGGTCAGTACTGGAGTGCGAGCCTCTGGGAAATCCGGTTCGCCGCCTAC");
+  //seqDataS.push_back("GGTACGGCGGTCATAGCGGGGGGGCCACACCCGGTCTCATTTCGAACCCGGAAGTTAAGCCCCCCAGCGATCCCGGCTGTACTGCCCTCCGAGAGGGGGCGGGAACCGGGGACGCCGCCGGCCA");
+  //seqDataS.push_back("GCCCACCCGGTCACAGTGAGCGGGCAACACCCGGACTCATTTCGAACCCGGAAGTTAAGCCGCTCACGTTAGTGGGGCCGTGGATACCGTGAGGATCCGCAGCCCCACTAAGCTGGGATGGGTTTT");
+
+  seqDataS.push_back("TGGTGTTCCACCTCTTTGCACAAGACGGCTAGCCCCATCTTTCCGTTGAACATATTTTCCC");
+  seqDataS.push_back("TGATCGTGCCTTGGCTCGTTGTTCGACGCCATCGTATTACGCTTTTCATTCAGAACTTCAA");
+  seqDataS.push_back("AGATGGGCTCCCACGTTCCGCACTATCGGCCGGCGCCATCTCACTTGTTATATACAACTTCAT");
+  seqDataS.push_back("AGATGGGGCCATCGTTTTACACAGTTGAATGCCGCCATCGTATTACACCCCTTATTCTCATTTTCAC");
+  seqDataS.push_back("AGGTAGGCTCCCACGTTCCGCACTATCGGCTGGCGCCATCCCATTTGTTATACACACTTTCAA");
+  /* clean2 end */
+
+
 
   //seqDataS.push_back("AAAAACCCCCTTTTTAAAAACC");
   //seqDataS.push_back("ATTAACGGCCTTTTTAAAACGG");

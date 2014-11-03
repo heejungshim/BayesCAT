@@ -100233,6 +100233,11 @@ int main(){
   //int main(int argc, char *argv[]){
 
 
+  //------------------------------------//
+  // Set up for basic information 
+  //------------------------------------//
+  
+
   int rank = 4;
   int np = 0;
 
@@ -100274,6 +100279,10 @@ int main(){
   RNG rng(11134*rank + 10000);
 
 
+  //------------------------------------//
+  // Set up parameters
+  //------------------------------------//
+  
   Parameters para;
 
   /* clean2 start */
@@ -100285,6 +100294,8 @@ int main(){
   //double pA = 0.19;
   //double pC = 0.31;
   //double pG = 0.33;  
+
+
 
   double kappa = 2;
   double gamma = 6.5;
@@ -100309,7 +100320,10 @@ int main(){
   para.setParameters(r, ri, rd, lambda, mu, gamma, pi);
   para.setKappa(kappa);
 
-
+  //------------------------------------//
+  // Set up hyper parameter for priors 
+  //------------------------------------//
+  
   /* clean2 start */
   //double t_kappa = 2;
   //double t_gamma = 2; 
@@ -100360,6 +100374,10 @@ int main(){
   /* clean2 end */
 
 
+  //------------------------------------//
+  // Set up tuning parameters 
+  //------------------------------------//
+  
   double r_c =  10000000;
   double rd_c = 1000;
   double pi_c = 10000000; 
@@ -100508,11 +100526,10 @@ int main(){
 
 
 
-
-
-
-
- 
+  //------------------------------------//
+  // Compute basic information for tree 
+  //------------------------------------//
+   
   int numLeaves = seqDataS.size();
   int numNodes = 2*numLeaves-2;
   int numEdges = 2*numLeaves-3;
@@ -100698,64 +100715,50 @@ int main(){
   temp = path + temp;
   temp = temp + Nm[rank];
   OUpIDHonEdgeLike.open(temp.c_str());
-
   temp = "RESUpIDHonEdgeWithFixedHMG";
   temp = path + temp;
   temp = temp + Nm[rank];
   OUpIDHonEdgeWithFixedHMG.open(temp.c_str());
-
   temp = "RESUpIDHonEdgebyDP";
   temp = path + temp;
   temp = temp + Nm[rank];
   OUpIDHonEdgebyDP.open(temp.c_str());
-
-
   temp = "RESUpIDHonEdgebyDPbestLetters";
   temp = path + temp;
   temp = temp + Nm[rank];
   OUpIDHonEdgebyDPbestLetters.open(temp.c_str());
-
   temp = "RESUpIDHonEdgeWithFixedHMGbyDP";
   temp = path + temp;
   temp = temp + Nm[rank];
   OUpIDHonEdgeWithFixedHMGbyDP.open(temp.c_str());
-
   temp = "RESSPRonSubTreeWithFixedHMG";
   temp = path + temp;
   temp = temp + Nm[rank];
   OSPRonSubTreeWithFixedHMG.open(temp.c_str());
-
   temp = "RESSPRonSubTreeWithFixedHMG_s";
   temp = path + temp;
   temp = temp + Nm[rank];
   OSPRonSubTreeWithFixedHMG_s.open(temp.c_str());
-
   temp = "RESSPRonSubTreebyDP";
   temp = path + temp;
   temp = temp + Nm[rank];
   OSPRonSubTreebyDP.open(temp.c_str());
-
   temp = "RESSPRonSubTreebyDP_s";
   temp = path + temp;
   temp = temp + Nm[rank];
   OSPRonSubTreebyDP_s.open(temp.c_str());
-
-
   temp = "RESSPRonSubTreebyDPbestLetters";
   temp = path + temp;
   temp = temp + Nm[rank];
   OSPRonSubTreebyDPbestLetters.open(temp.c_str());
-
   temp = "RESSPRonSubTreebyDPbestLetters_s";
   temp = path + temp;
   temp = temp + Nm[rank];
   OSPRonSubTreebyDPbestLetters_s.open(temp.c_str());
-
   temp = "RESSPRonSubTreeWithFixedHMGbyDP";
   temp = path + temp;
   temp = temp + Nm[rank];
   OSPRonSubTreeWithFixedHMGbyDP.open(temp.c_str());
-
   temp = "RESSPRonSubTreeWithFixedHMGbyDP_s";
   temp = path + temp;
   temp = temp + Nm[rank];
@@ -100819,7 +100822,6 @@ int main(){
   temp = path + temp;
   temp = temp + Nm[rank];
   OSPRonSubTreeWithTargetWithinWindow_s.open(temp.c_str());
-
   temp = "RESSPRonSubTree";
   temp = path + temp;
   temp = temp + Nm[rank];
@@ -100942,21 +100944,11 @@ int main(){
 
 
 
-
-
-
-  //outfile << "1" << seqDataS[0] << endl;
-  //outfile << "2" << seqDataS[1] << endl;
-  //outfile << "3" << seqDataS[2] << endl;
-  //outfile << "4" << seqDataS[3] << endl;
-  //outfile << "5" << seqDataS[4] << endl;
-
-  //seqDataS.resize(0);
-
-
-
-
-
+  //------------------------------------//
+  // To keep track of information things
+  // to print out at the end 
+  //------------------------------------//
+  
 
   InDelHistory* tmpIDH;
 
@@ -101001,10 +100993,6 @@ int main(){
   vector<double> w_Pi(4);
   vector<double> psrf_Pi(4);
   
-
-
-
-
 
   vector<int> numEachSplit(numSplits);
 
@@ -101088,8 +101076,6 @@ int main(){
 
 
 
-  
-
   outfile << "numSplits " << numSplits << endl;
   
   for(int ms =0; ms < splits.size() ; ms++){
@@ -101100,6 +101086,10 @@ int main(){
   outfile << endl;
 
 
+
+  //------------------------------------//
+  // Set up proposal weights 
+  //------------------------------------//
 
   int psNum;
   int SizePslSet = 25;
@@ -101158,9 +101148,6 @@ int main(){
   setWeight[24] = 15; 
 
 
-  //SizePslSet + 5
-  // SPRonSubTree, SPRonSubTreeLike, SPRonSubTreeWithinWindow, SPRonSubTreeWithTarget, SPRonSubTreeWithTargetWithinWindow
-
 
   vector<int> SPRonSubIX(0);
   SPRonSubIX.push_back(2);
@@ -101195,22 +101182,15 @@ int main(){
 
   
   Tree *TREE;
-  //Tree_HMG * TREE_HMG;
-  TREE = new Tree(numLeaves, rand, para, seqDataS); 
-  //TREE_HMG = new Tree_HMG();
-  
-
-  cout << "after construction " << endl;
+  TREE = new Tree(numLeaves, rand, para, seqDataS);  
   TREE->printTree();
-  cout << "priting tree are done" << endl;
+ 
 
   seqDataS.resize(0);
-  //TREE->printTree(0);
-  
+ 
   P_ac = 0;
   I_ac = 0;
-
-  
+ 
   double AP0;
   bool getOut = false;
   double getOutasNum = 0;
@@ -101253,9 +101233,6 @@ int main(){
     bool hyper = false;
     bool hyperup = false;
     psNum = setPsl[rand2.rwunif(setWeight)];
-    //TREE->printTree();
-    //cout << TREE->getLogLikeliData() << endl;
-    //cout << "m : " << m << " psNum : " << psNum << endl;
     int start; // start == 0 means don't consider proposal ratio
     if(m >= Fstburnlen)
       start = 1;
@@ -101351,19 +101328,11 @@ int main(){
       break;
     }
 
-    //cout << TREE->getLogLikeliData() << endl;
-    //TREE->printTree();
-
-    //cout << TREE->getLogLikeliData() << endl;
-    //cout << "11111" << endl;
-    
 
 
     if(!hyper){
 
-      AP = MIN(((double)1),AP0);
-
-      
+      AP = MIN(((double)1),AP0);      
       
       if(rand.runif()-AP < 0){
         //cout << "---------------------- Update ------------------------" << endl;
@@ -101390,23 +101359,7 @@ int main(){
             para.setIr((psNum-1), para.getIr((psNum-1))+1);
             num[psNum-1]++;
           }
-	  
-	  //if(psNum==2){
-	  //  if(para.getSPRonSingle()==1){
-	  //    para.setPr((SizePslSet), para.getPr((SizePslSet))+AP);
-	  //    para.setIr((SizePslSet), para.getIr((SizePslSet))+1);
-	  //    num[SizePslSet]++;
-          //  }else{
-	  //    para.setPr((psNum-1), para.getPr((psNum-1))+AP);
-	  //    para.setIr((psNum-1), para.getIr((psNum-1))+1);
-	  //    num[psNum-1]++;
-          //  }
-          //}else{
-	  //  para.setPr((psNum-1), para.getPr((psNum-1))+AP);
-	  //  para.setIr((psNum-1), para.getIr((psNum-1))+1);
-	  //  num[psNum-1]++;
-          //}
-       
+	         
         }else if((m >= Fstburnlen) & (m < Sndburnlen)){
           
           // For tuning
@@ -101509,30 +101462,8 @@ int main(){
       }
     }
 
-
-    // To check
-    
-    //vector<double> check(numEdges+1);
-    //for(int checkNum = 0; checkNum < numEdges; checkNum++)
-    //  check[checkNum] = TREE->getEdge(checkNum)->getlogLikeliIDH();
-    //check[numEdges] = TREE->getLogLikeliIDH();
-    //
-    //double tttt = check[numEdges] - TREE->likeliHistory(para);
-    //if(tttt < 0){
-    //  tttt = (-1)*tttt;
-    //}
-    //if(tttt > pow((double)10, (double)-6)){
-    //  cout << "ERROR A " << check[numEdges] << " " << TREE->likeliHistory(para) << endl;
-    //}
-    //for(int checkNum = 0; checkNum < numEdges; checkNum++){
-    //  if(check[checkNum] != TREE->getEdge(checkNum)->getlogLikeliIDH()){
-    //	cout << "ERROR B " << checkNum << " " << check[checkNum] << " " << TREE->getEdge(checkNum)->getlogLikeliIDH() << endl;
-    //  }
-    //}    
-    //cout << "AAAA " << endl;
     TREE->checkTree();
    
-
     if((m >= Fstburnlen + tuningIXA)  & (m < Sndburnlen)){
 
       // UpR
@@ -101551,7 +101482,7 @@ int main(){
         
         para.setR_c(value);
         
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
         
       }
@@ -101596,7 +101527,7 @@ int main(){
         
         para.setPi_c(value);
 	
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
         
       }
@@ -101619,7 +101550,7 @@ int main(){
         
         para.setLambda_c(value);
 	
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
 	
       }
@@ -101640,7 +101571,7 @@ int main(){
 	
         para.setKappa_c(value);
         
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
         
       }
@@ -101662,7 +101593,7 @@ int main(){
         
         para.setGamma_c(value);
         
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
         
       }
@@ -101685,7 +101616,7 @@ int main(){
 	
         para.setZeta(value);
 	
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
         
       }
@@ -101711,7 +101642,7 @@ int main(){
         
         para.setWindowLen_UpIDHonEdge(MAX(value, MINwindowLen));
 	
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
 	
       }
@@ -101733,7 +101664,7 @@ int main(){
         
         para.setWindowLen_UpIDHonEdgeLike(MAX(value, MINwindowLen));
 	
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
         
       }
@@ -101754,7 +101685,7 @@ int main(){
         
         para.setWindowLen_SPRonSubTreeWithinWindow(MAX(value, MINwindowLen));
         
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
 	
       }
@@ -101775,7 +101706,7 @@ int main(){
         
         para.setWindowLen_SPRonSubTreeWithTargetWithinWindow(MAX(value, MINwindowLen));
 	
-        cout << i << " " << double_tmp << " " << value << endl;
+        //cout << i << " " << double_tmp << " " << value << endl;
         tuningIX[i] += tuningIV;
 	
       }
@@ -101789,28 +101720,7 @@ int main(){
     //
     //-------------------------------------------------
 
-
-    //cout << "AAA" << endl;
-    
     if(m >= burnlen){
-
-      
- 
-      
-      // Summarize alignments
-      //alignS.resize(0);
-      //cout << "MMM" << endl;
-      //TREE->getAlignments(alignS);
-      //cout << "BBB : " << alignS.size() << endl;
-      //TREE->printTree();
-      //TREE->printAlignments(OAlignment, alignS);
-      //cout << "CCC" << endl;
-      //TREE_HMG->constructHMGTree(alignS);
-      //cout << "HHH" << endl;
-      //alignS.resize(0);
-
-
-
 
       numI = 0;
       numD = 0; 
@@ -101885,8 +101795,7 @@ int main(){
 
 
       
-      
-      
+           
       if(printIX == m){
 
 
@@ -101957,19 +101866,10 @@ int main(){
         TREE->printBL(OtreeBL);    
 
 
-
-    
-        // Summarize alignments
         alignS.resize(0);
         TREE->getAlignments(alignS);
-        //cout << "BBB : " << alignS.size() << endl;
-        //TREE->printTree();
         OAlignment << ">alignment " << m-burnlen << endl;
         TREE->printAlignmentsPosi_v2(OAlignment, alignS);
-        //TREE->printAlignments(OAlignment, alignS);
-        //cout << "CCC" << endl;
-        //TREE_HMG->constructHMGTree(alignS);
-        //cout << "HHH" << endl;
         alignS.resize(0);
 
 

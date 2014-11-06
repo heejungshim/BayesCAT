@@ -100225,20 +100225,210 @@ void Node::getAlignment(int pos, vector<int> &align, vector<vector<int> > &align
 /*** NNI end ***/
 
 
+//#include <sys/stat.h>
+//#include <sys/types.h>
+
+//#ifdef WINDOWS
+//#include <windows.h> 
+//#endif
+
+/* betterinput start */
+#include <map>
+#define com_empty 1001
+#define com_seqfile 1002 
+#define com_seed 1003
+#define com_iter 1004 
+#define com_burnin 1005
+#define com_samplingIV 1006
+#define com_alpha_gamma 1007
+#define com_alpha_kappa 1008
+#define com_alpha_lambda 1009 
+#define com_alpha_A 1010 
+#define com_alpha_C 1011 
+#define com_alpha_G 1012
+#define com_alpha_T 1013
+#define com_alpha_r 1014
+#define com_beta_r 1015
+#define com_alpha_rd 1016
+#define com_beta_rd 1017
+/* betterinput end */
 
 
 
+//int main(){
+int main(int argc, char *argv[]){
 
-int main(){
-  //int main(int argc, char *argv[]){
+
+  /* betterinput start */
+	map<string, int> hcom; 
+	hcom[""] = com_empty;
+  hcom["-seqfile"] = com_seqfile; 
+	hcom["-seed"] = com_seed;
+	hcom["-iterations"] = com_iter; 
+	hcom["-burnin"] = com_burnin; 
+	hcom["-samplingIV"] = com_samplingIV;
+	hcom["-alpha_gamma"] = com_alpha_gamma;
+	hcom["-alpha_kappa"] = com_alpha_kappa;
+	hcom["-alpha_lambda"] = com_alpha_lambda; 
+	hcom["-alpha_A"] = com_alpha_A; 
+	hcom["-alpha_C"] = com_alpha_C; 
+	hcom["-alpha_G"] = com_alpha_G;
+	hcom["-alpha_T"] = com_alpha_T;
+	hcom["-alpha_r"] = com_alpha_r;
+	hcom["-beta_r"] = com_beta_r;
+	hcom["-alpha_rd"] = com_alpha_rd;
+	hcom["-beta_rd"] = com_beta_rd;
+ 
+  // Set up default values	
+  string inputfile; 
+  int seed = 1000;
+  int MClen2 = 1000;  // length of Markov Chain without burning part
+  int burnlen = -1;  // length of Markov Chain for burning 
+  int printIV = -1;
+  double gamma_epsilon = 1/2;
+  double kappa_epsilon = 1/2;
+  double lambda_epsilon = 1/0.005;
+  vector<double> pi_alpha(4);
+  pi_alpha[0] = 0.25*70;
+  pi_alpha[1] = 0.25*70;
+  pi_alpha[2] = 0.25*70;
+  pi_alpha[3] = 0.25*70;
+  double r_alpha = 100;
+  double r_beta = 12200;
+  double rd_alpha = 3;
+  double rd_beta = 15;
+ 
+ 
+	for(int i = 1; i < argc; i++) 
+	{   
+		string str;  
+		string opt; 
+		if(argv[i][0] != '-') 
+			continue;
+		
+		str.assign(argv[i]);
+		opt.assign(str, 0, str.length());
+
+		map<string, int> :: iterator iter; 
+		iter = hcom.find(opt); 
+		if(iter == hcom.end())
+		{
+			cout << "-BayesCAT: unknown option: " << opt << endl; 
+			exit(0); 
+		}
+		
+		switch (hcom[opt]) 
+		{			
+    case com_seqfile:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      str.assign(argv[i+1]);
+      inputfile = str;
+      break;
+    case com_seed:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      seed = atoi(argv[i+1]); 
+      break;
+    case com_iter:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      MClen2 = atoi(argv[i+1]); 
+      break;
+    case com_burnin:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      burnlen = atoi(argv[i+1]); 
+      break;
+    case com_samplingIV:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      printIV = atoi(argv[i+1]); 
+      break;
+    case com_alpha_gamma:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      gamma_epsilon = atof(argv[i+1]); 
+      break;
+    case com_alpha_kappa:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      kappa_epsilon = atof(argv[i+1]); 
+      break;
+    case com_alpha_lambda:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      lambda_epsilon = atof(argv[i+1]); 
+      break;
+    case com_alpha_A:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      pi_alpha[0] = atof(argv[i+1]); 
+      break;
+    case com_alpha_C:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      pi_alpha[1] = atof(argv[i+1]); 
+      break;
+    case com_alpha_G:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      pi_alpha[2] = atof(argv[i+1]); 
+      break;
+    case com_alpha_T:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      pi_alpha[3] = atof(argv[i+1]); 
+      break;
+    case com_alpha_r:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      r_alpha = atof(argv[i+1]); 
+      break;
+    case com_beta_r:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      r_beta = atof(argv[i+1]); 
+      break;
+    case com_alpha_rd:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      rd_alpha = atof(argv[i+1]); 
+      break;
+    case com_beta_rd:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      rd_beta = atof(argv[i+1]); 
+      break;
+    }
+	}
+
+ 
+  // when -seqfile argument is missing, show error message and finish a program!
+  if(inputfile.size() == 0)
+  {
+    cout << "-BayesCAT: sequence file name is not provided! " << endl; 
+    exit(0); 
+  }
+
+  // when burnlen and printIX are missing, set up burnlen as 10% of MClen2 
+  // and set up printIV as min(MClen2/1000, 1)
+  if(burnlen == -1){
+    burnlen = (int) (MClen2 * 0.1);
+  }
+  if(printIV == -1){
+    printIV = (int)max(MClen2/1000, 1);
+  }
+
+  cout << "inputfile : " << inputfile << endl;
+  cout << "seed : " << seed << endl;
+  cout << "MClen2 : " << MClen2 << endl;
+  cout << "burnlen : " << burnlen << endl;
+  cout << "printIV : " << printIV << endl;
+  cout << "gamma_epsilon : " << gamma_epsilon << endl;
+  cout << "kappa_epsilon : " << kappa_epsilon << endl;
+  cout << "lambda_epsilon : " << lambda_epsilon << endl;
+  cout << "piA : " << pi_alpha[0] << endl;
+  cout << "piC : " << pi_alpha[1] << endl;
+  cout << "piG : " << pi_alpha[2] << endl;
+  cout << "piT : " << pi_alpha[3] << endl;
+  cout << "r_alpha : " << r_alpha << endl;
+  cout << "r_beta : " << r_beta << endl;
+  cout << "rd_alpha : " << rd_alpha << endl;
+  cout << "rd_beta : " << rd_beta << endl;
+  /* betterinput end */
 
 
   //------------------------------------//
   // Set up for basic information 
   //------------------------------------//
   
-
-  int rank = 4;
+  int rank = seed;
+  //int rank = 4;
   int np = 0;
 
   /* clean1 start */
@@ -100246,9 +100436,9 @@ int main(){
   //int MClen2 = 1000000;  // length of Markov Chain without burning part
   //int burnlen = 100000;  // length of Markov Chain for burning 
 
-  int MClen = 1100;   // length of Markov Chain with burning part
-  int MClen2 = 1000;  // length of Markov Chain without burning part
-  int burnlen = 100;  // length of Markov Chain for burning 
+  int MClen = MClen2 + burnlen;   // length of Markov Chain with burning part
+  //int MClen2 = 1000;  // length of Markov Chain without burning part
+  //int burnlen = 100;  // length of Markov Chain for burning 
   /* clean1 end */
 
   int Fstburnlen = burnlen*3/4;
@@ -100259,7 +100449,7 @@ int main(){
   /* clean1 start */
   int printIX = burnlen;
   //int printIV = 1000;
-  int printIV = 10;
+  //int printIV = 10;
   /* clean1 end */
 
   int tuningIXA = 100;
@@ -100296,15 +100486,14 @@ int main(){
   //double pG = 0.33;  
 
 
-
-  double kappa = 2;
-  double gamma = 6.5;
-  double rd = 1/(double)4;
-  double r =  1/(double)50;
-  double lambda = 0.05;
-  double pA = 0.18;
-  double pC = 0.32;
-  double pG = 0.17;   
+  double kappa = 1/kappa_epsilon;
+  double gamma = 1/gamma_epsilon;
+  double rd = rd_alpha/(rd_alpha + rd_beta);
+  double r =  r_alpha/(r_alpha + r_beta);
+  double lambda = 1/lambda_epsilon;
+  double pA = pi_alpha[0]/sum_vec(pi_alpha);
+  double pC = pi_alpha[1]/sum_vec(pi_alpha);
+  double pG = pi_alpha[2]/sum_vec(pi_alpha);
   /* clean2 end */
 
   double pT = 1 - pA - pC - pG;
@@ -100320,59 +100509,29 @@ int main(){
   para.setParameters(r, ri, rd, lambda, mu, gamma, pi);
   para.setKappa(kappa);
 
-  //------------------------------------//
-  // Set up hyper parameter for priors 
-  //------------------------------------//
+
+  // Reading sequence data
+  vector<string> seqDataS(0);  
+  fstream infile; 
+  string line;
+
+  infile.open(inputfile.c_str(), ios::in);
+  if(!infile.is_open())
+  {
+    cout << "-BayesCAT: cannot open sequence file " << endl; 
+    exit(0); 
+  }else{
+    while(!infile.eof()){
+      infile >> line;
+      if(line.find(">") == 0){
+        infile >> line;
+        seqDataS.push_back(line);
+      }
+    }
+    
+    infile.close(); 
+  }
   
-  /* clean2 start */
-  //double t_kappa = 2;
-  //double t_gamma = 2; 
-  //double t_rd = 0.9875;
-  //double t_r =   0.2;
-  //double t_lambda = 0.005;
-  //double piA = 0.19;
-  //double piC = 0.31;
-  //double piG = 0.33;   
-  //double piT = 1 - piA - piC - piG;
-  //double pi_overVar = 70; // larger means small variance.
-  //double gamma_epsilon = 1/t_gamma;
-  //double kappa_epsilon = 1/t_kappa;
-  //double lambda_epsilon = 1/t_lambda;
-  //vector<double> pi_alpha(4);
-  //pi_alpha[0] = piA*pi_overVar;
-  //pi_alpha[1] = piC*pi_overVar;
-  //pi_alpha[2] = piG*pi_overVar;
-  //pi_alpha[3] = piT*pi_overVar;
-  //double r_alpha = 100;
-  //double r_beta = 12200;
-  //double rd_alpha = 3;
-  //double rd_beta = 15;
-  //double rd_epsilon = 0.5;
-  //double gamma_alpha = 5;
-  //double gamma_beta = 1;
-
-  double t_kappa = 2;
-  double t_gamma = 6.5; 
-  double t_lambda = 0.05;
-  double piA = 0.18;
-  double piC = 0.32;
-  double piG = 0.17;   
-  double piT = 1 - piA - piC - piG;
-  double pi_overVar = 5; // larger means small variance.
-  double gamma_epsilon = 1/t_gamma;
-  double kappa_epsilon = 1/t_kappa;
-  double lambda_epsilon = 1/t_lambda;
-  vector<double> pi_alpha(4);
-  pi_alpha[0] = piA*pi_overVar;
-  pi_alpha[1] = piC*pi_overVar;
-  pi_alpha[2] = piG*pi_overVar;
-  pi_alpha[3] = piT*pi_overVar;
-  double r_alpha = 2;
-  double r_beta = 98;
-  double rd_alpha = 4;
-  double rd_beta = 12;
-  /* clean2 end */
-
 
   //------------------------------------//
   // Set up tuning parameters 
@@ -100498,7 +100657,7 @@ int main(){
   //-- v26 end --//
 
 
-  vector<string> seqDataS(0);
+  //vector<string> seqDataS(0);
 
   /* clean2 start */
   //seqDataS.push_back("TGCCTGGCGGCCGTAGCGCGGTGGTCCCACCTGACCCCATGCCGAACTCAGAAGTGAAACGCCGTAGCGCCGATGGTAGTGTGGGGTCTCCCCATGCGAGAGTAGGGAACTGCCAGGCAT");
@@ -100507,11 +100666,11 @@ int main(){
   //seqDataS.push_back("GGTACGGCGGTCATAGCGGGGGGGCCACACCCGGTCTCATTTCGAACCCGGAAGTTAAGCCCCCCAGCGATCCCGGCTGTACTGCCCTCCGAGAGGGGGCGGGAACCGGGGACGCCGCCGGCCA");
   //seqDataS.push_back("GCCCACCCGGTCACAGTGAGCGGGCAACACCCGGACTCATTTCGAACCCGGAAGTTAAGCCGCTCACGTTAGTGGGGCCGTGGATACCGTGAGGATCCGCAGCCCCACTAAGCTGGGATGGGTTTT");
 
-  seqDataS.push_back("TGGTGTTCCACCTCTTTGCACAAGACGGCTAGCCCCATCTTTCCGTTGAACATATTTTCCC");
-  seqDataS.push_back("TGATCGTGCCTTGGCTCGTTGTTCGACGCCATCGTATTACGCTTTTCATTCAGAACTTCAA");
-  seqDataS.push_back("AGATGGGCTCCCACGTTCCGCACTATCGGCCGGCGCCATCTCACTTGTTATATACAACTTCAT");
-  seqDataS.push_back("AGATGGGGCCATCGTTTTACACAGTTGAATGCCGCCATCGTATTACACCCCTTATTCTCATTTTCAC");
-  seqDataS.push_back("AGGTAGGCTCCCACGTTCCGCACTATCGGCTGGCGCCATCCCATTTGTTATACACACTTTCAA");
+  //seqDataS.push_back("TGGTGTTCCACCTCTTTGCACAAGACGGCTAGCCCCATCTTTCCGTTGAACATATTTTCCC");
+  //seqDataS.push_back("TGATCGTGCCTTGGCTCGTTGTTCGACGCCATCGTATTACGCTTTTCATTCAGAACTTCAA");
+  //seqDataS.push_back("AGATGGGCTCCCACGTTCCGCACTATCGGCCGGCGCCATCTCACTTGTTATATACAACTTCAT");
+  //seqDataS.push_back("AGATGGGGCCATCGTTTTACACAGTTGAATGCCGCCATCGTATTACACCCCTTATTCTCATTTTCAC");
+  //seqDataS.push_back("AGGTAGGCTCCCACGTTCCGCACTATCGGCTGGCGCCATCCCATTTGTTATACACACTTTCAA");
   /* clean2 end */
 
 

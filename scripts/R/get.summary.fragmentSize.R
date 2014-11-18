@@ -38,15 +38,21 @@ output.file = args[3]
 getIDlen <- function(input.x){
 
   x = as.matrix(input.x)
-  res = lapply(x, function(y){ if(is.na(y)){return (NULL)
+  res = lapply(x, function(y){ if(is.na(y) || (y=="")){return (NULL)
                                            }else{
                                              if(length(grep(" ", y))==0){
                                                return (as.numeric(y))
                                              }else{
-                                               return (as.numeric(unlist(strsplit(y, split=" "))))
+                                               tmp = as.numeric(unlist(strsplit(y, split=" ")))
+                                               wh = which(is.na(tmp) == TRUE)
+                                               if(length(wh) > 0){
+                                                 tmp = tmp[-wh]
+                                               }
+                                               return (tmp)
                                              }
                                            }
                               })
+
   return (res)
 
 }
@@ -80,7 +86,7 @@ getIDlenDist <- function(index, max.val, len.dat1, len.dat2 = NULL){
 
 
 ## Read MCMC samples and convert them to a list of lists for insertion and/or deletion fragment sizes
-dat = read.table(input.I.file, sep=";", as.is=TRUE)
+dat = read.table(input.I.file, sep=";", as.is = TRUE)
 Ilen.dat = apply(dat[,1:(dim(dat)[2]-1)], 1, getIDlen)
 
 dat = read.table(input.D.file, sep=";", as.is=TRUE)

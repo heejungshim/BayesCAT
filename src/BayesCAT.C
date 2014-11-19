@@ -100255,6 +100255,7 @@ void Node::getAlignment(int pos, vector<int> &align, vector<vector<int> > &align
 #define com_beta_r 1015
 #define com_alpha_rd 1016
 #define com_beta_rd 1017
+#define com_more_info 1018
 /* betterinput end */
 
 
@@ -100282,7 +100283,8 @@ int main(int argc, char *argv[]){
 	hcom["-beta_r"] = com_beta_r;
 	hcom["-alpha_rd"] = com_alpha_rd;
 	hcom["-beta_rd"] = com_beta_rd;
- 
+  hcom["-more_info"] = com_more_info;
+
   // Set up default values	
   string inputfile; 
   int seed = 1000;
@@ -100301,7 +100303,7 @@ int main(int argc, char *argv[]){
   double r_beta = 12200;
   double rd_alpha = 3;
   double rd_beta = 15;
- 
+  double more_info = 0; 
  
 	for(int i = 1; i < argc; i++) 
 	{   
@@ -100388,6 +100390,11 @@ int main(int argc, char *argv[]){
       if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
       rd_beta = atof(argv[i+1]); 
       break;
+    case com_more_info:
+      if(argv[i+1] == NULL || argv[i+1][0] == '-') continue;
+      more_info = atof(argv[i+1]); 
+      break;
+
     }
 	}
 
@@ -100760,6 +100767,7 @@ int main(int argc, char *argv[]){
   
   string temp;
 
+  if(more_info == 1){
   temp = "RESSPRonSingleEdge";
   OSPRonSingleEdge.open(temp.c_str());
   temp = "RESUpEdgeLen";
@@ -100843,11 +100851,14 @@ int main(int argc, char *argv[]){
   OSPRonSubTreeWithTarget.open(temp.c_str());
   temp = "RESSPRonSubTreeWithTargetWithinWindow";
   OSPRonSubTreeWithTargetWithinWindow.open(temp.c_str());
-
+  
 
 
   temp = "RESthetaPrior";
   OthetaPrior.open(temp.c_str());
+  }
+
+
   temp = "RES";
   outfile.open(temp.c_str());
   temp = "RESmnumI";
@@ -101774,7 +101785,7 @@ int main(int argc, char *argv[]){
 
 
 
-        OthetaPrior << TREE->calPriorParas(para) << " ";
+        //OthetaPrior << TREE->calPriorParas(para) << " ";
         OloglikeliData << TREE->getLogLikeliData() << " ";
         OloglikeliIDH << TREE->getLogLikeliIDH() << " ";
         OloglikeliEdges << TREE->CalculatelogLikeliEdges(para) << " ";
@@ -102021,7 +102032,7 @@ int main(int argc, char *argv[]){
   //outfile << endl;  
 
 
-
+  if(more_info == 1){
   
 
   outfile << "#############################################" << endl;
@@ -102151,7 +102162,7 @@ int main(int argc, char *argv[]){
   outfile  << "Ilen : "  << mIlen << " " << m_Ilen << " " << sqrt(s_Ilen/(double)(MClen2-1)) << '\n';
   outfile  << "Dlen : "  << mDlen << " " << m_Dlen << " " << sqrt(s_Dlen/(double)(MClen2-1)) << '\n';
   outfile  << "ntotalEdgeLen : "  << mtotalEdgeLen << " " << m_totalEdgeLen << " " << sqrt(s_totalEdgeLen/(double)(MClen2-1)) << '\n';
-
+  }
 
   delete TREE;
   //delete TREE_HMG;

@@ -1,6 +1,7 @@
 
 
 
+
 #include <vector>
 #include <cmath>
 #include <iostream>
@@ -9771,7 +9772,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   tempInt1.resize(0);
   tempInt2.resize(0);
 
-
+  /*
   for(s = 0; s < numLeaves; s++){
     intTemp = seqDataCh[s].size();
     for(m = 0; m < intTemp; m++){
@@ -9779,6 +9780,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     }
     cout << endl;
   }
+  */
   lambda = params.getLambda();
   mu = params.getMu();
   ri = params.getRi();
@@ -9825,6 +9827,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       }
 
        
+      /*
       cout << "i : " << i << " j : " << j << endl;
       cout << "Aligns1" << endl;
       for(s =0; s < Aligns.size(); s++){
@@ -9832,7 +9835,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       	  cout << Aligns[s][m] << " ";
       	cout << endl;
       }
-
+      */
 
 
       AllpairAligns[i].push_back(Aligns);
@@ -9875,7 +9878,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   }
 
 
-
+  /*
   cout << "print AllpairHMG" << endl;
   for(i = 0; i < numLeaves; i++){
     for(j = 0; j < numLeaves; j++){
@@ -9886,7 +9889,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       cout << endl;
     }
   }
-
+  */
 
   //-------------------------------//
   //
@@ -9895,7 +9898,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   //--------------------------------//
 
 
-  cout << "Get all pairwise distance " << endl;
+  //cout << "Get all pairwise distance " << endl;
 
   dist.resize(numLeaves);
   distIX.resize(numLeaves);
@@ -9906,7 +9909,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       dist[i][j] = dist[j][i];
     dist[i][i] = 0;
     for(j = (i+1); j < numLeaves; j++){
-      cout << "i : " << i << " j : " << j << endl;
+      //cout << "i : " << i << " j : " << j << endl;
       Tnum = 0;
       Dnum = 0;
       Aligns.resize(0);
@@ -9919,7 +9922,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	    Dnum++;
         }
       }
-      cout << "Tnum : " << Tnum << " Dnum : " << Dnum << endl; 
+      //cout << "Tnum : " << Tnum << " Dnum : " << Dnum << endl; 
       smallval = (double)Dnum/Tnum;
       if(smallval > (double)3/4){
 	dist[i][j] = -(double)3/4*log(1-(double)4/3*(2.9/4));
@@ -9930,13 +9933,14 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     }
   }
 
+  /*
   cout << "dist" << endl;
   for(s =0; s < dist.size(); s++){
     for(m = 0; m < dist[s].size(); m++)
       cout << dist[s][m] << " ";
     cout << endl;
   }
-
+  */
 
   //-------------------------------//
   //
@@ -9950,8 +9954,8 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   //cout << "numNodes : " << numNodes << endl;
   while(distSize > 2){
   
-    cout << "distSize : " << distSize << endl;
-    cout << "newSetIX :" << newSetIX << endl;
+    //cout << "distSize : " << distSize << endl;
+    //cout << "newSetIX :" << newSetIX << endl;
     // 1. Compute ui
     U.resize(distSize);
     for(i = 0; i < distSize; i++){
@@ -9962,8 +9966,8 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     }
     
 
-    cout << "U " << endl;
-    print_vecd(U);
+    //cout << "U " << endl;
+    //print_vecd(U);
 
     // 2. Choose the i and j for which Dij - ui - uj is smallest.
 
@@ -9972,14 +9976,14 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     smallIJ[1] = 1;
     smallval = dist[0][1] - U[0] - U[1];
 
-    cout << "smallval " << smallval << endl;
+    //cout << "smallval " << smallval << endl;
 
     for(i = 0; i < distSize; i++){
       for(j = (i+1); j < distSize; j++){
-	cout << "i : " << i << " j : " << j << endl;
-	cout << "dist[i][j] - U[i] - U[j]" << dist[i][j] - U[i] - U[j] << endl;
+        //cout << "i : " << i << " j : " << j << endl;
+        //cout << "dist[i][j] - U[i] - U[j]" << dist[i][j] - U[i] - U[j] << endl;
 	if(smallval > dist[i][j] - U[i] - U[j]){
-	  cout << "change " << endl;
+	  //cout << "change " << endl;
 	  smallval = dist[i][j] - U[i] - U[j];
 	  smallIJ[0] = i;
 	  smallIJ[1] = j;
@@ -9987,7 +9991,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       }
     }
 
-    cout << "smallest i and j " << smallIJ[0] << " " << smallIJ[1] << endl;
+    //cout << "smallest i and j " << smallIJ[0] << " " << smallIJ[1] << endl;
 
 
     // 3. Join items i and j. Compute the branch length from i to the new node(vi) and from j to the new node(vj) as.....
@@ -10000,9 +10004,9 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     edges[distIX[j]]->setEdgeLen((dist[i][j] + U[j] - U[i])/(double)2);
 
 
-    cout << "real edge number distIX[i] " << distIX[i] << " distIX[j] " << distIX[j] << endl;
-    cout << "edges[distIX[i]]->getEdgeLen() " << edges[distIX[i]]->getEdgeLen() << " edges[distIX[j]]->getEdgeLen() " << edges[distIX[j]]->getEdgeLen() << endl;
-    cout << "nodes[newSetIX]->getnumber() " << nodes[newSetIX]->getnumber() << endl;
+    //cout << "real edge number distIX[i] " << distIX[i] << " distIX[j] " << distIX[j] << endl;
+    //cout << "edges[distIX[i]]->getEdgeLen() " << edges[distIX[i]]->getEdgeLen() << " edges[distIX[j]]->getEdgeLen() " << edges[distIX[j]]->getEdgeLen() << endl;
+    //cout << "nodes[newSetIX]->getnumber() " << nodes[newSetIX]->getnumber() << endl;
 
 
     nodes[newSetIX]->setEdge(1, edges[distIX[i]]);
@@ -10042,6 +10046,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
    
     distIX.push_back(newSetIX++);
    
+/*
     cout << "print distIX " << endl;
     print_veci(distIX);
 
@@ -10052,7 +10057,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       cout << endl;
     }
 
-
+*/
 
   }
 
@@ -10069,7 +10074,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   root->setEdge(0, edges[distIX[0]]);
 
 
-  printTree();
+  //printTree();
 
 
 
@@ -10137,21 +10142,21 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 
     //while(virtualLen > 1){
     while(stIX < virtualLeaves.size()){
-
+      /*
       cout << "In while and begining " << endl;
       cout << "virtualLeaves " << endl;
       print_veci(virtualLeaves);
       cout << "virtualParentEdgeNum " << endl;
       print_veci(virtualParentEdgeNum);
-      
+      */
 
 
 
       // Finding cherry
       i = virtualLeaves[stIX];
-      cout << "stIX : " << stIX << " i : " << i << endl;
+      //cout << "stIX : " << stIX << " i : " << i << endl;
       pairIX = getCloseNodeNumberInGivenSet(i, virtualLeaves, virtualParentEdgeNum[stIX]); 
-      cout << "pairIX : " << pairIX << endl;
+      //cout << "pairIX : " << pairIX << endl;
       if(pairIX < 0){
 	stIX++;
 	//break;
@@ -10205,7 +10210,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 
       }
 
-
+/*
       cout << "In while and ending " << endl;
       cout << "virtualLeavesT " << endl;
       print_veci(virtualLeavesT);
@@ -10217,7 +10222,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       cout << "cherriesE" << endl;
       for(m = 0; m < cherriesE.size(); m++)
 	cout << cherriesE[m][0] << " " << cherriesE[m][1] << endl;
-
+*/
   
     }  // End of while(virtualLen > 1)  
 
@@ -10226,8 +10231,8 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 
     // pick the one with 
 
-    cout << "tempDB " << endl;
-    print_vecd(tempDB);
+    //cout << "tempDB " << endl;
+    //print_vecd(tempDB);
 
 
     //if(leftoverLeaf)
@@ -10237,7 +10242,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 
 
     //cout << "leftoverLeaf " << leftoverLeaf << endl;
-    cout << "cherryIX " << cherryIX << endl;
+    //cout << "cherryIX " << cherryIX << endl;
     //cout << "virtualLen " << virtualLen << endl;
 
     done = false;
@@ -10260,8 +10265,8 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       leftNnum = cherries[cherryIX][0];
       rightNnum = cherries[cherryIX][1];
 
-      cout << "leftNnum " << leftNnum << endl;
-      cout << "rightNnum " << rightNnum << endl;
+      //cout << "leftNnum " << leftNnum << endl;
+      //cout << "rightNnum " << rightNnum << endl;
       
       
       //if(rightNnum <= leftNnum)
@@ -10284,8 +10289,8 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       tempInt2.resize(0);
 
 
-      cout << "centerN setLeavesBelow" << endl;
-      print_veci(tempInt1);
+      //cout << "centerN setLeavesBelow" << endl;
+      //print_veci(tempInt1);
 
       
       for(i = 0; i < numLeaves; i++)
@@ -10302,14 +10307,14 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  LeavesList.push_back(i);
       }
       
-      cout << "LeavesList" << endl;
-      print_veci(LeavesList);
+      //cout << "LeavesList" << endl;
+      //print_veci(LeavesList);
 
       
       stIX = centerN->getnumber();
       seqDataCh[stIX].resize(0);
       
-      cout << "stIX " << stIX << endl;
+      //cout << "stIX " << stIX << endl;
 
 
       Aligns.resize(0);
@@ -10337,14 +10342,14 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       }
 
 
-
+      /*
       cout << "Aligns" << endl;
       for(s =0; s < Aligns.size(); s++){
       	for(m = 0; m < Aligns[s].size(); m++)
       	  cout << Aligns[s][m] << " ";
       	cout << endl;
       }
-
+      */
 
 
       Aligns2.resize(2);
@@ -10355,12 +10360,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       HMGsize = Aligns.size();
       for(i = 0; i < HMGsize; i++){
 
-	cout << "***** " << i << " ******" << endl;
+        //cout << "***** " << i << " ******" << endl;
 
 	
 	if((Aligns[i][0] > -1) & (Aligns[i][1] > -1)){
 	  
-	  cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
+	  //cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
 
 
 	  // * - ? - *
@@ -10388,12 +10393,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	    tempInt2.push_back(tempInt4[j]);
 	  }
 
-
+/*
 	  cout << "Leaves number related to this site" << endl;
 	  print_veci(tempInt1);
 	  cout << "position related to this site" << endl;
 	  print_veci(tempInt2);
-
+*/
 	  
 	  tempInt3.resize(0);
 	  tempInt4.resize(0);
@@ -10424,12 +10429,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	    
 	  }
 	  
-
+/*
 	  cout << "Leaves (other) number related to this site" << endl;
 	  print_veci(tempInt3);
 	  cout << "position (other) related to this site" << endl;
 	  print_veci(tempInt4);
- 
+*/
 
 
 	  // determine letters
@@ -10461,26 +10466,28 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  tempInt3.resize(0);
 	  which_max_vec(distIX, tempInt3);
 
+/*
 	  cout << "distIX " << endl;
 	  print_veci(distIX);
 	  cout << "max char " << endl;
 	  print_veci(tempInt3);
+*/
 
 	  if(tempInt3.size() == 1){
-	    cout << "only one " << endl;
-	    cout << "tempInt3[0] " << tempInt3[0] << endl;
-	    cout << "chars[tempInt3[0]] " << chars[tempInt3[0]] << endl;
-	    cout << "stIX " << stIX << endl;
+	    //cout << "only one " << endl;
+	    //cout << "tempInt3[0] " << tempInt3[0] << endl;
+	    //cout << "chars[tempInt3[0]] " << chars[tempInt3[0]] << endl;
+	    //cout << "stIX " << stIX << endl;
 	    seqDataCh[stIX].push_back(chars[tempInt3[0]]);
 	  }else{
-	    cout << "more than one " << endl;
+	    //cout << "more than one " << endl;
 	    distIX.resize(0);
 	    for(j = 0; j < tempInt3.size(); j++)
 	      distIX.push_back(1);
 	    seqDataCh[stIX].push_back(chars[tempInt3[rand.rwunif(distIX)]]);
-	    cout << seqDataCh[stIX][seqDataCh[stIX].size()-1] << endl;
+	    //cout << seqDataCh[stIX][seqDataCh[stIX].size()-1] << endl;
 	  }
-	  cout << "AA " << endl;
+	  //cout << "AA " << endl;
 	  
 	  centerN->RelatedLeaves_push_back(tempInt1);
 	  centerN->RelatedPosi_push_back(tempInt2);
@@ -10490,14 +10497,14 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  tempInt3.resize(0);
 	  tempInt4.resize(0);
 
-	  cout << "BB" << endl;
+	  //cout << "BB" << endl;
 	  
 	}else if((Aligns[i][0] > -1) & (Aligns[i][1] == -1)){ 
 	  // Else of if((Aligns[i][0] > -1) & (Aligns[i][1] > -1)){
 	  
 	  // * - ? - -1
 
-	  cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
+	  //cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
 	  
 	  
 	  // search for leaves and positions aligned to this position
@@ -10507,12 +10514,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  tempInt2.resize(0); // Leaves number related to this site
 	  tempInt2 = leftN->getRelatedPosi(Aligns[i][0]);
 	  
-
+/*
 	  cout << "Leaves number related to this site" << endl;
 	  print_veci(tempInt1);
 	  cout << "position related to this site" << endl;
 	  print_veci(tempInt2);
-
+*/
 
 	  tempInt3.resize(0);
 	  tempInt4.resize(0);
@@ -10541,17 +10548,17 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	    }
 	    
 	  }
-	  
+    /*  
 	  cout << "Leaves (other) number related to this site" << endl;
 	  print_veci(tempInt3);
 	  cout << "position (other) related to this site" << endl;
 	  print_veci(tempInt4);
- 	    
+    */
 	  // determine alignment
 	  
 	  if(tempInt3.size() == 0){  // nothing is aligned to this position
 	    
-	    cout << "nothing is aligned!" << endl;
+	    //cout << "nothing is aligned!" << endl;
 
 	    // asign gap
 	    smallIJ[0] = 1;
@@ -10566,7 +10573,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  }else{                      // something is aligned to this position
 	    
 
-	    cout << "something is aligned" << endl;
+	    //cout << "something is aligned" << endl;
 
 	    // determine alignment
 	    smallIJ[0] = 1;
@@ -10604,12 +10611,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	    
 	    tempInt3.resize(0);
 	    which_max_vec(distIX, tempInt3);
-
+/*
 	    cout << "distIX " << endl;
 	    print_veci(distIX);
 	    cout << "max char " << endl;
 	    print_veci(tempInt3);
-
+*/
 
 
 	    if(tempInt3.size() == 1)
@@ -10634,7 +10641,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	}else if((Aligns[i][0] == -1) & (Aligns[i][1] >  -1)){ 
 	  // Else of if((Aligns[i][0] > -1) & (Aligns[i][1] == -1)){
 
-	  cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
+	  //cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
 
 	  
 	  // -1 - ? - *
@@ -10644,12 +10651,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  tempInt1 = rightN->getRelatedLeaves(Aligns[i][1]);
 	  tempInt2.resize(0); // Leaves number related to this site
 	  tempInt2 = rightN->getRelatedPosi(Aligns[i][1]);
-
+/*
 	  cout << "Leaves number related to this site" << endl;
 	  print_veci(tempInt1);
 	  cout << "position related to this site" << endl;
 	  print_veci(tempInt2);
-	  
+*/	  
 	  tempInt3.resize(0);
 	  tempInt4.resize(0);
 	  
@@ -10677,19 +10684,19 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	    }
 	    
 	  }
-	  
+    /*  
 	  cout << "Leaves (other) number related to this site" << endl;
 	  print_veci(tempInt3);
 	  cout << "position (other) related to this site" << endl;
 	  print_veci(tempInt4);
- 	  
+ 	  */
 
 
 	  // determine alignment
 	  
 	  if(tempInt3.size() == 0){  // nothing is aligned to this position
 	    
-	    cout << "nothing is aligned" << endl;
+	    //cout << "nothing is aligned" << endl;
 
 	    // asign gap
 	    smallIJ[0] = 0;
@@ -10703,7 +10710,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	    
 	  }else{                      // something is aligned to this position
 
-	    cout << "something is aligned" << endl;
+	    //cout << "something is aligned" << endl;
 	    
 	    // determine alignment
 	    smallIJ[0] = 0;
@@ -10741,12 +10748,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	    
 	    tempInt3.resize(0);
 	    which_max_vec(distIX, tempInt3);
-
+/*
 	    cout << "distIX " << endl;
 	    print_veci(distIX);
 	    cout << "max char " << endl;
 	    print_veci(tempInt3);
-	    
+*/    
 
 	    if(tempInt3.size() == 1)
 	      seqDataCh[stIX].push_back(chars[tempInt3[0]]);
@@ -10768,18 +10775,19 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  
 	}else{ // Else of if (Aligns[i][0] == -1) & (Aligns[i][1] >  -1)){ 
 	  //(Aligns[i][0] == -1) & (Aligns[i][1] == -1))
-	  cout << "ERROR (Aligns[i][0] == -1) & (Aligns[i][1] == -1) never happen! " << endl;
+	  //cout << "ERROR (Aligns[i][0] == -1) & (Aligns[i][1] == -1) never happen! " << endl;
 	}
 	
       }  // End of for(i = 0; i < intTemp; i++)
       
 
-      cout << "setSeqLen" << endl;
-      cout << "stIX " << stIX << endl;
+      //cout << "setSeqLen" << endl;
+      //cout << "stIX " << stIX << endl;
       centerN->setSeqLen(seqDataCh[stIX].size());
-      cout << "centerN->getnumber() : " << centerN->getnumber() << endl;
-      cout << "centerN->getSeqLen() : " << centerN->getSeqLen() << endl;
+      //cout << "centerN->getnumber() : " << centerN->getnumber() << endl;
+      //cout << "centerN->getSeqLen() : " << centerN->getSeqLen() << endl;
 
+/*
       cout << "done! " << endl;
       cout << "seqDataCh[stIX] " << stIX << endl;
       for(i = 0; i < seqDataCh[stIX].size(); i++)
@@ -10799,7 +10807,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       	  cout << Aligns2[1][s][k] << " ";
       	cout << endl;
       }
-
+*/
 
 
       //---------------------------------
@@ -10819,15 +10827,15 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       leftE->calHMG();
       rightE->calHMG();
 
-
+/*
       cout << "leftE->getnumber() : " << leftE->getnumber() << endl;
       leftE->printEdge();
       cout << "rightE->getnumber() : " << rightE->getnumber() << endl;
       rightE->printEdge();
+*/
 
 
-
-      cout << "cherryIX " << cherryIX << endl;
+      //cout << "cherryIX " << cherryIX << endl;
       tempDB.erase(tempDB.begin() + cherryIX);
       cherries.erase(cherries.begin() + cherryIX);
       cherriesE.erase(cherriesE.begin() + cherryIX);
@@ -10836,7 +10844,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       virtualParentEdgeNum.push_back(virtualParentEdgeNumT[cherryIX]);
       virtualParentEdgeNumT.erase(virtualParentEdgeNumT.begin() + cherryIX);
 
-
+/*
       cout << "After removing " << endl;
       cout << "virtualLeaves " << endl;
       print_veci(virtualLeaves);
@@ -10854,7 +10862,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	cout << cherriesE[m][0] << " " << cherriesE[m][1] << endl;
       cout << "tempDB" << endl;
       print_vecd(tempDB);
-
+*/
 
 
       if(tempDB.size() == 0)
@@ -10872,7 +10880,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   if(virtualLeaves.size() == 3){
 
 
-    cout << "We have three leaves" << endl;
+    //cout << "We have three leaves" << endl;
 
     /*
     if(leftoverLeaf){
@@ -10972,24 +10980,24 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     }
     
 
-
+/*
     cout << "virtualLeaves " << endl;
     print_veci(virtualLeaves);
     cout << "virtualParentEdgeNum " << endl;
     print_veci(virtualParentEdgeNum);
-    
+*/  
     
     leftNnum = leftN->getnumber();
     rightNnum = rightN->getnumber();
 
 
- 
+    /*
     cout << "leftNnum " << leftNnum << endl;
     cout << "rightNnum " << rightNnum << endl;
     cout << "leftE->getnumber() : " << leftE->getnumber() << endl;
     cout << "rightE->getnumber() : " << rightE->getnumber() << endl;
     cout << "centerN->getnumber() : " << centerN->getnumber() << endl;
-
+    */
 
     centerN->leavesBelowReset();
     tempInt1.resize(0);
@@ -11002,8 +11010,8 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     centerN->setleavesBelow(tempInt1);
     tempInt2.resize(0);
     
-    cout << "centerN setLeavesBelow" << endl;
-    print_veci(tempInt1);
+    //cout << "centerN setLeavesBelow" << endl;
+    //print_veci(tempInt1);
 
 
     for(i = 0; i < numLeaves; i++)
@@ -11020,8 +11028,8 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	LeavesList.push_back(i);
     }
     
-    cout << "LeavesList" << endl;
-    print_veci(LeavesList);
+    //cout << "LeavesList" << endl;
+    //print_veci(LeavesList);
 
 
        
@@ -11029,7 +11037,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     seqDataCh[stIX].resize(0);
     
     
-    cout << "stIX " << stIX << endl;
+    //cout << "stIX " << stIX << endl;
 
     Aligns.resize(0);
     if((leftNnum < numLeaves) & (rightNnum < numLeaves))
@@ -11055,14 +11063,14 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       delete pVT;
     }
     
-
+/*
     cout << "Aligns" << endl;
     for(s =0; s < Aligns.size(); s++){
       for(m = 0; m < Aligns[s].size(); m++)
 	cout << Aligns[s][m] << " ";
       cout << endl;
     }
-
+*/
     
     Aligns2.resize(2);
     smallIJ.resize(2);
@@ -11073,12 +11081,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     for(i = 0; i < HMGsize; i++){
       
 
-      cout << "***** " << i << " ******" << endl;
+      //cout << "***** " << i << " ******" << endl;
 
       if((Aligns[i][0] > -1) & (Aligns[i][1] > -1)){
 	
 
-	cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
+        //cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
 	
 	// * - ? - *
 	
@@ -11105,11 +11113,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  tempInt2.push_back(tempInt4[j]);
 	}
 
+/*
 	cout << "Leaves number related to this site" << endl;
 	print_veci(tempInt1);
 	cout << "position related to this site" << endl;
 	print_veci(tempInt2);
-	
+*/
 
 	
 	tempInt3.resize(0);
@@ -11141,12 +11150,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  
 	}
 
-
+/*
 	cout << "Leaves (other) number related to this site" << endl;
 	print_veci(tempInt3);
 	cout << "position (other) related to this site" << endl;
 	print_veci(tempInt4);
-	
+*/
 
 	
 	// determine letters
@@ -11178,12 +11187,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	tempInt3.resize(0);
 	which_max_vec(distIX, tempInt3);
 
-
+/*
 	cout << "distIX " << endl;
 	print_veci(distIX);
 	cout << "max char " << endl;
 	print_veci(tempInt3);
-	
+*/
 	if(tempInt3.size() == 1)
 	  seqDataCh[stIX].push_back(chars[tempInt3[0]]);
 	else{
@@ -11208,7 +11217,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	
 	// search for leaves and positions aligned to this position
 
-	cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
+	//cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
 
 	
 	tempInt1.resize(0); // Leaves number related to this site
@@ -11216,11 +11225,13 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	tempInt2.resize(0); // Leaves number related to this site
 	tempInt2 = leftN->getRelatedPosi(Aligns[i][0]);
 	
-
+/*
 	cout << "Leaves number related to this site" << endl;
 	print_veci(tempInt1);
 	cout << "position related to this site" << endl;
 	print_veci(tempInt2);
+*/
+
 
 	tempInt3.resize(0);
 	tempInt4.resize(0);
@@ -11250,19 +11261,19 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  
 	}
 	
-	
+/*	
 	cout << "Leaves (other) number related to this site" << endl;
 	print_veci(tempInt3);
 	cout << "position (other) related to this site" << endl;
 	print_veci(tempInt4);	
-	
+*/
 
 	// determine alignment
 	
 	if(tempInt3.size() == 0){  // nothing is aligned to this position
 	  
 	
-	  cout << "nothing is aligned!" << endl;
+	  //cout << "nothing is aligned!" << endl;
 	  
 
 	  // asign gap
@@ -11278,7 +11289,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	}else{                      // something is aligned to this position
 
 
-	  cout << "something is aligned" << endl;
+	  //cout << "something is aligned" << endl;
 	  
 	  // determine alignment
 	  smallIJ[0] = 1;
@@ -11316,12 +11327,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  
 	  tempInt3.resize(0);
 	  which_max_vec(distIX, tempInt3);
-
+/*
 	  cout << "distIX " << endl;
 	  print_veci(distIX);
 	  cout << "max char " << endl;
 	  print_veci(tempInt3);
-	  
+*/  
 
 
 	  if(tempInt3.size() == 1)
@@ -11346,7 +11357,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       }else if((Aligns[i][0] == -1) & (Aligns[i][1] >  -1)){ 
 	// Else of if((Aligns[i][0] > -1) & (Aligns[i][1] == -1)){
 	
-	cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
+	//cout << "Aligns[i][0] : " << Aligns[i][0] << " Aligns[i][1] : " << Aligns[i][1] << endl;
 
 
 	// -1 - ? - *
@@ -11357,12 +11368,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	tempInt2.resize(0); // Leaves number related to this site
 	tempInt2 = rightN->getRelatedPosi(Aligns[i][1]);
 
-
+/*
 	cout << "Leaves number related to this site" << endl;
 	print_veci(tempInt1);
 	cout << "position related to this site" << endl;
 	print_veci(tempInt2);
-	
+*/
 	tempInt3.resize(0);
 	tempInt4.resize(0);
 	
@@ -11390,19 +11401,19 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  }
 	  
 	}
-	
+	/*
 	cout << "Leaves (other) number related to this site" << endl;
 	print_veci(tempInt3);
 	cout << "position (other) related to this site" << endl;
 	print_veci(tempInt4);
- 	  	
+  */	
 	
 
 	// determine alignment
 	
 	if(tempInt3.size() == 0){  // nothing is aligned to this position
 	
-	  cout << "nothing is aligned" << endl;
+	  //cout << "nothing is aligned" << endl;
   
 	  // asign gap
 	  smallIJ[0] = 0;
@@ -11417,7 +11428,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	}else{                      // something is aligned to this position
 	  
 
-	  cout << "something is aligned" << endl;
+	  //cout << "something is aligned" << endl;
 
 	  // determine alignment
 	  smallIJ[0] = 0;
@@ -11455,12 +11466,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	  
 	  tempInt3.resize(0);
 	  which_max_vec(distIX, tempInt3);
-
+/*
 	  cout << "distIX " << endl;
 	  print_veci(distIX);
 	  cout << "max char " << endl;
 	  print_veci(tempInt3);
-	  
+*/  
 
 	  if(tempInt3.size() == 1)
 	    seqDataCh[stIX].push_back(chars[tempInt3[0]]);
@@ -11482,14 +11493,14 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 	
       }else{ // Else of if (Aligns[i][0] == -1) & (Aligns[i][1] >  -1)){ 
 	//(Aligns[i][0] == -1) & (Aligns[i][1] == -1))
-	cout << "ERROR (Aligns[i][0] == -1) & (Aligns[i][1] == -1) never happen! " << endl;
+	//cout << "ERROR (Aligns[i][0] == -1) & (Aligns[i][1] == -1) never happen! " << endl;
       }
       
     }   // End of for(i = 0; i < intTemp; i++)
 
 
     centerN->setSeqLen(seqDataCh[stIX].size());
-    
+    /*
     cout << "done! " << endl;
     cout << "seqDataCh[stIX] " << stIX << endl;
     for(i = 0; i < seqDataCh[stIX].size(); i++)
@@ -11510,7 +11521,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
       cout << endl;
     }
     
-
+    */
 
     //---------------------------------
     // 
@@ -11529,12 +11540,12 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
     
     leftE->calHMG();
     rightE->calHMG();
-
+/*
     cout << "leftE->getnumber() : " << leftE->getnumber() << endl;
     leftE->printEdge();
     cout << "rightE->getnumber() : " << rightE->getnumber() << endl;
     rightE->printEdge();
-    
+*/  
 
 
 
@@ -11542,7 +11553,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
 
 
 
-  cout << "Now we have two leaves!" << endl;
+  //cout << "Now we have two leaves!" << endl;
 
   // Now we have two virtualLeaves
 
@@ -11555,9 +11566,9 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   rightNnum = rightN->getnumber();
 
 
-  cout << "leftNnum " << leftNnum << endl;
-  cout << "rightNnum " << rightNnum << endl;
-  cout << "leftE->getnumber() : " << leftE->getnumber() << endl;
+  //cout << "leftNnum " << leftNnum << endl;
+  // cout << "rightNnum " << rightNnum << endl;
+  //cout << "leftE->getnumber() : " << leftE->getnumber() << endl;
 
 
   Aligns.resize(0);
@@ -11588,8 +11599,8 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   leftE->calHMG();
   
 
-  cout << "leftE->getnumber() : " << leftE->getnumber() << endl;
-  leftE->printEdge();
+  //cout << "leftE->getnumber() : " << leftE->getnumber() << endl;
+  //leftE->printEdge();
 
 
   // done!!!!!!!!!!!
@@ -11643,7 +11654,7 @@ Tree::Tree(int n, Rand &rand, Parameters &params,vector<string> seqDataS) : numL
   seqData.resize(0);
 
 
-  cout << "done!!!!!!!!!!!" << endl;
+  //cout << "done!!!!!!!!!!!" << endl;
 
 }
 //-- v30 v31 end --//
@@ -12021,28 +12032,28 @@ void Tree::calculateLogLikelihood(const Parameters &params) {
 
   double result = 0;
 
-  cout << "In calculateLogLikelihood 1" << endl;
+  //cout << "In calculateLogLikelihood 1" << endl;
 
 
   logLikeliIDH[current] = likeliHistory(params);
 
-  cout << "logLikeliIDH[current] : " <<  logLikeliIDH[current]  << endl;
+  //cout << "logLikeliIDH[current] : " <<  logLikeliIDH[current]  << endl;
 
 
-  cout << "In calculateLogLikelihood 2" << endl;
+  //cout << "In calculateLogLikelihood 2" << endl;
 
   logLikeliEdges[current] = CalculatelogLikeliEdges(params);
 
-  cout << "logLikeliEdges[current] : " << logLikeliEdges[current] << endl;
+  //cout << "logLikeliEdges[current] : " << logLikeliEdges[current] << endl;
 
-  cout << "In calculateLogLikelihood 3" << endl;
+  //cout << "In calculateLogLikelihood 3" << endl;
 
   root->likeliDataR_v2(params);
 
-  cout << "In calculateLogLikelihood 4" << endl;
+  //cout << "In calculateLogLikelihood 4" << endl;
   logLikeliData[current] = likeliData();
 
-  cout << "In calculateLogLikelihood 5" << endl;
+  //cout << "In calculateLogLikelihood 5" << endl;
 
   /*
   cout << endl;
@@ -100225,13 +100236,6 @@ void Node::getAlignment(int pos, vector<int> &align, vector<vector<int> > &align
 /*** NNI end ***/
 
 
-//#include <sys/stat.h>
-//#include <sys/types.h>
-
-//#ifdef WINDOWS
-//#include <windows.h> 
-//#endif
-
 /* betterinput start */
 #include <map>
 #define com_empty 1001
@@ -100255,7 +100259,7 @@ void Node::getAlignment(int pos, vector<int> &align, vector<vector<int> > &align
 
 
 
-//int main(){
+
 int main(int argc, char *argv[]){
 
 
@@ -100404,22 +100408,6 @@ int main(int argc, char *argv[]){
     printIV = (int)max(MClen2/1000, 1);
   }
 
-  cout << "inputfile : " << inputfile << endl;
-  cout << "seed : " << seed << endl;
-  cout << "MClen2 : " << MClen2 << endl;
-  cout << "burnlen : " << burnlen << endl;
-  cout << "printIV : " << printIV << endl;
-  cout << "gamma_epsilon : " << gamma_epsilon << endl;
-  cout << "kappa_epsilon : " << kappa_epsilon << endl;
-  cout << "lambda_epsilon : " << lambda_epsilon << endl;
-  cout << "piA : " << pi_alpha[0] << endl;
-  cout << "piC : " << pi_alpha[1] << endl;
-  cout << "piG : " << pi_alpha[2] << endl;
-  cout << "piT : " << pi_alpha[3] << endl;
-  cout << "r_alpha : " << r_alpha << endl;
-  cout << "r_beta : " << r_beta << endl;
-  cout << "rd_alpha : " << rd_alpha << endl;
-  cout << "rd_beta : " << rd_beta << endl;
   /* betterinput end */
 
 
@@ -100428,29 +100416,15 @@ int main(int argc, char *argv[]){
   //------------------------------------//
   
   int rank = seed;
-  //int rank = 4;
   int np = 0;
 
-  /* clean1 start */
-  //int MClen = 1100000;   // length of Markov Chain with burning part
-  //int MClen2 = 1000000;  // length of Markov Chain without burning part
-  //int burnlen = 100000;  // length of Markov Chain for burning 
 
   int MClen = MClen2 + burnlen;   // length of Markov Chain with burning part
-  //int MClen2 = 1000;  // length of Markov Chain without burning part
-  //int burnlen = 100;  // length of Markov Chain for burning 
-  /* clean1 end */
-
   int Fstburnlen = burnlen*3/4;
   int Sndburnlen = Fstburnlen/3;
 
 
-
-  /* clean1 start */
   int printIX = burnlen;
-  //int printIV = 1000;
-  //int printIV = 10;
-  /* clean1 end */
 
   int tuningIXA = 100;
   int tuningIV = 100;
@@ -100475,17 +100449,6 @@ int main(int argc, char *argv[]){
   
   Parameters para;
 
-  /* clean2 start */
-  //double kappa = 2;
-  //double gamma = 2; 
-  //double rd = 1/(double)6;
-  //double r =  1/(double)123;
-  //double lambda = 0.005;
-  //double pA = 0.19;
-  //double pC = 0.31;
-  //double pG = 0.33;  
-
-
   double kappa = 1/kappa_epsilon;
   double gamma = 1/gamma_epsilon;
   double rd = rd_alpha/(rd_alpha + rd_beta);
@@ -100494,7 +100457,7 @@ int main(int argc, char *argv[]){
   double pA = pi_alpha[0]/sum_vec(pi_alpha);
   double pC = pi_alpha[1]/sum_vec(pi_alpha);
   double pG = pi_alpha[2]/sum_vec(pi_alpha);
-  /* clean2 end */
+
 
   double pT = 1 - pA - pC - pG;
   vector<double> pi(4);
@@ -100657,34 +100620,6 @@ int main(int argc, char *argv[]){
   //-- v26 end --//
 
 
-  //vector<string> seqDataS(0);
-
-  /* clean2 start */
-  //seqDataS.push_back("TGCCTGGCGGCCGTAGCGCGGTGGTCCCACCTGACCCCATGCCGAACTCAGAAGTGAAACGCCGTAGCGCCGATGGTAGTGTGGGGTCTCCCCATGCGAGAGTAGGGAACTGCCAGGCAT");
-  //seqDataS.push_back("GTCTACGGCCATACCACCCTGAACGCGCCCGATCTCGTCTGATCTCGGAAGCTAAGCAGGGTCGGGCCTGGTTAGTACTTGGATGGGAGACCGCCTGGGAATACCGGGTGCTGTAGGCTTT");
-  //seqDataS.push_back("TTAAGGCGGCCATAGCGGTGGGGTTACTCCCGTACCCATCCCGAACACGGAAGATAAGCCCGCCTGCGTTCCGGTCAGTACTGGAGTGCGAGCCTCTGGGAAATCCGGTTCGCCGCCTAC");
-  //seqDataS.push_back("GGTACGGCGGTCATAGCGGGGGGGCCACACCCGGTCTCATTTCGAACCCGGAAGTTAAGCCCCCCAGCGATCCCGGCTGTACTGCCCTCCGAGAGGGGGCGGGAACCGGGGACGCCGCCGGCCA");
-  //seqDataS.push_back("GCCCACCCGGTCACAGTGAGCGGGCAACACCCGGACTCATTTCGAACCCGGAAGTTAAGCCGCTCACGTTAGTGGGGCCGTGGATACCGTGAGGATCCGCAGCCCCACTAAGCTGGGATGGGTTTT");
-
-  //seqDataS.push_back("TGGTGTTCCACCTCTTTGCACAAGACGGCTAGCCCCATCTTTCCGTTGAACATATTTTCCC");
-  //seqDataS.push_back("TGATCGTGCCTTGGCTCGTTGTTCGACGCCATCGTATTACGCTTTTCATTCAGAACTTCAA");
-  //seqDataS.push_back("AGATGGGCTCCCACGTTCCGCACTATCGGCCGGCGCCATCTCACTTGTTATATACAACTTCAT");
-  //seqDataS.push_back("AGATGGGGCCATCGTTTTACACAGTTGAATGCCGCCATCGTATTACACCCCTTATTCTCATTTTCAC");
-  //seqDataS.push_back("AGGTAGGCTCCCACGTTCCGCACTATCGGCTGGCGCCATCCCATTTGTTATACACACTTTCAA");
-  /* clean2 end */
-
-
-
-  //seqDataS.push_back("AAAAACCCCCTTTTTAAAAACC");
-  //seqDataS.push_back("ATTAACGGCCTTTTTAAAACGG");
-  //seqDataS.push_back("ACACACACACACACACCCTTTTT");
-  //seqDataS.push_back("ACACAGAGAGAGACCCTTTTTT");
-  //seqDataS.push_back("AAAAACTTCCTTTTT");
-  //seqDataS.push_back("TTCTATCCTTTTACTCTTTTATTTCTCTAATCTTTC");
-  //seqDataS.push_back("TCACTTTTCACTTTTAT");
-
-
-
   //------------------------------------//
   // Compute basic information for tree 
   //------------------------------------//
@@ -100822,105 +100757,44 @@ int main(int argc, char *argv[]){
   
   vector<vector<int> > alignS(0); // To save alignments
   
-
-  string path = "";
-  string Nm(20, 'c');
+  
   string temp;
 
-  Nm[0] = 'a';
-  Nm[1] = 'b';
-  Nm[2] = 'c';
-  Nm[3] = 'd';
-  Nm[4] = 'e';
-  Nm[5] = 'f';
-  Nm[6] = 'g';
-  Nm[7] = 'h';
-  Nm[8] = 'i';
-  Nm[9] = 'j';
-  Nm[10] = 'k';
-  Nm[11] = 'l';
-  Nm[12] = 'm';
-  Nm[13] = 'n';
-  Nm[14] = 'o';
-  Nm[15] = 'p';
-  Nm[16] = 'q';
-  Nm[17] = 'r';
-  Nm[18] = 's';
-  Nm[19] = 't';            
-
-
-
   temp = "RESSPRonSingleEdge";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSingleEdge.open(temp.c_str());
   temp = "RESUpEdgeLen";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpEdgeLen.open(temp.c_str());
   temp = "RESUpIDHandSeq";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpIDHandSeq.open(temp.c_str());
   temp = "RESUpIDHandSeq_v2";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpIDHandSeq_v2.open(temp.c_str());
   temp = "RESUpIDHonEdge";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpIDHonEdge.open(temp.c_str());
   temp = "RESUpIDHonEdgeLike";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpIDHonEdgeLike.open(temp.c_str());
   temp = "RESUpIDHonEdgeWithFixedHMG";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpIDHonEdgeWithFixedHMG.open(temp.c_str());
   temp = "RESUpIDHonEdgebyDP";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpIDHonEdgebyDP.open(temp.c_str());
   temp = "RESUpIDHonEdgebyDPbestLetters";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpIDHonEdgebyDPbestLetters.open(temp.c_str());
   temp = "RESUpIDHonEdgeWithFixedHMGbyDP";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpIDHonEdgeWithFixedHMGbyDP.open(temp.c_str());
   temp = "RESSPRonSubTreeWithFixedHMG";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithFixedHMG.open(temp.c_str());
   temp = "RESSPRonSubTreeWithFixedHMG_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithFixedHMG_s.open(temp.c_str());
   temp = "RESSPRonSubTreebyDP";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreebyDP.open(temp.c_str());
   temp = "RESSPRonSubTreebyDP_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreebyDP_s.open(temp.c_str());
   temp = "RESSPRonSubTreebyDPbestLetters";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreebyDPbestLetters.open(temp.c_str());
   temp = "RESSPRonSubTreebyDPbestLetters_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreebyDPbestLetters_s.open(temp.c_str());
   temp = "RESSPRonSubTreeWithFixedHMGbyDP";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithFixedHMGbyDP.open(temp.c_str());
   temp = "RESSPRonSubTreeWithFixedHMGbyDP_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithFixedHMGbyDP_s.open(temp.c_str());
 
 
@@ -100934,172 +100808,113 @@ int main(int argc, char *argv[]){
   //temp = temp + Nm[rank];
   //OUpOneIDHfixHMG.open(temp.c_str());
   temp = "RESUpR";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpR.open(temp.c_str());
   temp = "RESUpRd";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpRd.open(temp.c_str());
   temp = "RESUpPi";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpPi.open(temp.c_str());
   temp = "RESUpLambda";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpLambda.open(temp.c_str());
   temp = "RESUpKappa";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpKappa.open(temp.c_str());
   temp = "RESUpGamma";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OUpGamma.open(temp.c_str());
 
 
 
 
   temp = "RESSPRonSubTree_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTree_s.open(temp.c_str());
   temp = "RESSPRonSubTreeLike_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeLike_s.open(temp.c_str());  
   temp = "RESSPRonSubTreeWithinWindow_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithinWindow_s.open(temp.c_str());
   temp = "RESSPRonSubTreeWithTarget_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithTarget_s.open(temp.c_str());
   temp = "RESSPRonSubTreeWithTargetWithinWindow_s";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithTargetWithinWindow_s.open(temp.c_str());
   temp = "RESSPRonSubTree";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTree.open(temp.c_str());
   temp = "RESSPRonSubTreeLike";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeLike.open(temp.c_str());  
   temp = "RESSPRonSubTreeWithinWindow";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithinWindow.open(temp.c_str());
   temp = "RESSPRonSubTreeWithTarget";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithTarget.open(temp.c_str());
   temp = "RESSPRonSubTreeWithTargetWithinWindow";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OSPRonSubTreeWithTargetWithinWindow.open(temp.c_str());
 
 
 
   temp = "RESthetaPrior";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OthetaPrior.open(temp.c_str());
   temp = "RES";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   outfile.open(temp.c_str());
   temp = "RESmnumI";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmnumI.open(temp.c_str());
   temp = "RESmnumD";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmnumD.open(temp.c_str());
   temp = "RESIleninAll";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OIleninAll.open(temp.c_str());
   temp = "RESDleninAll";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   ODleninAll.open(temp.c_str());
   temp = "RESmtotalEdgeLen";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OtotalEdgeLen.open(temp.c_str());  
   temp = "RESmnumIinAll";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmnumIinAll.open(temp.c_str());
   temp = "RESmnumDinAll";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmnumDinAll.open(temp.c_str());
   temp = "RESmedgeLen";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmedgeLen.open(temp.c_str());
   temp = "RESmR";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmR.open(temp.c_str());
   temp = "RESmRd";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmRd.open(temp.c_str());
   temp = "RESmRi";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmRi.open(temp.c_str());
   temp = "RESmMu";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmMu.open(temp.c_str());
   temp = "RESmLambda";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmLambda.open(temp.c_str());
   temp = "RESmKappa";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmKappa.open(temp.c_str());
   temp = "RESmGamma";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmGamma.open(temp.c_str());
   temp = "RESmP";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OmP.open(temp.c_str());
   temp = "RESloglikeliData";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OloglikeliData.open(temp.c_str());
   temp = "RESloglikeliIDH";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OloglikeliIDH.open(temp.c_str());
   temp = "RESloglikeliEdges";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OloglikeliEdges.open(temp.c_str());
   temp = "REStree";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   Otree.open(temp.c_str());
   temp = "REStreeBL";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OtreeBL.open(temp.c_str());
   temp = "RESAlignment";
-  temp = path + temp;
-  temp = temp + Nm[rank];
   OAlignment.open(temp.c_str());
+
+
+
+  outfile << "inputfile : " << inputfile << endl;
+  outfile << "seed : " << seed << endl;
+  outfile << "number of iterations : " << MClen2 << endl;
+  outfile << "number of iterations as burn in : " << burnlen << endl;
+  outfile << "interval size for sampling : " << printIV << endl;
+  outfile << "alpha_gamma : " << gamma_epsilon << endl;
+  outfile << "alpha_kappa : " << kappa_epsilon << endl;
+  outfile << "alpha_lambda : " << lambda_epsilon << endl;
+  outfile << "alpha_A : " << pi_alpha[0] << endl;
+  outfile << "alpha_C : " << pi_alpha[1] << endl;
+  outfile << "alpha_G : " << pi_alpha[2] << endl;
+  outfile << "alpha_T : " << pi_alpha[3] << endl;
+  outfile << "alpha_r : " << r_alpha << endl;
+  outfile << "beta_r : " << r_beta << endl;
+  outfile << "alpha_rd : " << rd_alpha << endl;
+  outfile << "beta_rd : " << rd_beta << endl;
+ 
+
 
 
 
@@ -101342,8 +101157,8 @@ int main(int argc, char *argv[]){
   
   Tree *TREE;
   TREE = new Tree(numLeaves, rand, para, seqDataS);  
-  TREE->printTree();
- 
+  //TREE->printTree();
+
 
   seqDataS.resize(0);
  
@@ -102199,11 +102014,15 @@ int main(int argc, char *argv[]){
 
   // print all information
 
-  outfile << "MClen2: "  <<  MClen2 << endl;
-  outfile << "num of Splits " << endl;
-  for(i = 0; i < numSplits; i++)
-    outfile << numEachSplit[i] << " ";
-  outfile << endl;  
+  //outfile << "MClen2: "  <<  MClen2 << endl;
+  //outfile << "num of Splits " << endl;
+  //for(i = 0; i < numSplits; i++)
+  //  outfile << numEachSplit[i] << " ";
+  //outfile << endl;  
+
+
+
+  
 
   outfile << "#############################################" << endl;
   outfile << "##                                         ##" << endl;

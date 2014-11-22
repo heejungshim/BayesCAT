@@ -1,5 +1,5 @@
 
-This repository contains BayesCAT, a software implementing a Bayesian Co-estimation of Alignment and Tree, described in [Shim and Larget 2014](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper).
+This repository contains BayesCAT, a software package implementing a Bayesian Co-estimation of Alignment and Tree, described in [Shim and Larget 2014](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper).
 
 BayesCAT is a free software, you can redistribute it and/or modify it under
 the terms of the GNU General Public License (GPLv3+).

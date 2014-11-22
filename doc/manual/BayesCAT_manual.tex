@@ -1,0 +1,219 @@
+% Created 2014-11-22 Sat 11:44
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{underscore}
+\usepackage{parskip}
+\usepackage{lmodern}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\usepackage{underscore}
+\textwidth 16cm
+\oddsidemargin 0.5cm
+\evensidemargin 0.5cm
+\author{Heejung Shim}
+\date{\today}
+\title{BayesCAT Manual}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.3.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Overview}
+\label{sec-1}
+The \textbf{BayesCAT} software implements a joint model for co-estimating phylogeny and sequence alignment described in Shim2014. Traditionally, phylogeny and sequence alignment are estimated separately: first estimate a multiple sequence alignment and then infer a phylogeny based on the sequence alignment estimated in the previous step. However, uncertainty in the alignment estimation is ignored, resulting, possibly, in overstated certainty in phylogeny estimates. The implemented joint model for co-estimating phylogeny and sequence alignment improves estimates from the traditional approach by accounting for uncertainty in the alignment in phylogenetic inferences. 
+
+Compared to alternative joint methods, our insertion and deletion (indel) model allows arbitrary-length overlapping indel events and a general distribution for indel fragment size. In addition, we explicitly model a completely history of indel events on the tree. Therefore, our approach enables us to infer more information about the indel process.
+
+The implemented methods for joint estimation of phylogeny and sequence alignment  
+\begin{itemize}
+\item infer phylogeny while accounting for uncertainty in the alignment
+\item summarize alignment samples
+\item infer more information about the indel process.
+\end{itemize}
+
+\section{How to cite BayesCAT}
+\label{sec-2}
+Heejung Shim and Bret Larget (2014). BayesCAT: Bayesian Co-estimation of Alignment and Tree (Under review).
+
+\section{Other software packages which are required in BayesCAT}
+\label{sec-3}
+BayesCAT uses multiple software packages to summarize tree and alignment samples and check if Markov Chain converges. This section explains how to install those packages. 
+\subsection{A software package: summarize}
+\label{sec-3-1}
+To summarize tree samples, we use `summarize' software. 
+We download summarize.tgz from \href{http://badger.duq.edu/download/index.html}{BADGER's website}, unzip, and compile a code: 
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+mkdir tmp
+cd tmp/
+wget http://badger.duq.edu/download/summarize.tgz
+tar -zxvf summarize.tgz
+cd Summarize
+make
+\end{lstlisting}
+Then, we can get `summarize' binary file. We copy it to bin directory in BayesCAT package:
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+cp tmp/Summarize/summarize ~/BayesCAT/bin/
+\end{lstlisting}
+
+We can summarize tree MCMC samples using 
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+~/BayesCAT/bin/summarize treesummaryfile > outputfile
+\end{lstlisting}
+
+\subsection{A software package: FSA}
+\label{sec-3-2}
+We download the latest version of FSA from \href{http://sourceforge.net/projects/fsa/}{Sourceforge FSA project page}, unzip, and build:
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+cd tmp/
+wget http://sourceforge.net/projects/fsa/files/latest/download/fsa-1.15.9.tar.gz
+tar -zxvf fsa-1.15.9.tar.gz
+cd fsa-1.15.9
+./configure
+make
+\end{lstlisting}
+
+\subsection{A software package: chart}
+\label{sec-3-3}
+To check if Markov Chain converges by using tree samples, we use `chart' which is part of \href{http://badger.duq.edu/}{the Badger software package}.
+We provide `chart.C' in BayesCAT/script/C directory. We compile, and move binary file to bin directory:
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+cd ~/BayesCAT/scripts/C
+g++ -l chart chart.C
+mv chart ~/BayesCAT/bin/
+\end{lstlisting}
+
+\section{How to run BayesCAT}
+\label{sec-4}
+If you followed the instruction in \href{https://github.com/heejungshim/BayesCAT}{our github}, you already have BayesCAT installed and have binary executable file BayesCAT in the directory `BayesCAT/src/'. We start with making a directory to perform an analysis using a toy example.
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+cd BayesCAT
+mkdir test1
+cd test1
+\end{lstlisting}
+As a toy example, we use simulated data of five sequences which we provide in `/BayesCAT/data/example/sequence.fasta'. We copy the toy example to the current directory and we can run \textbf{BayesCAT} on this dataset, using for example 
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+cp ~/BayesCAT/data/example/sequence.fasta .
+~/BayesCAT/src/BayesCAT -seqfile sequence.fasta -seed 4 -iterations 1000 -burnin 100 -samplingIV 10 -alpha_gamma 0.1538462 -alpha_kappa 0.5 -alpha_lambda 20 -alpha_A 0.90 -alpha_C 1.6 -alpha_G 0.85 -alpha_T 1.65 -alpha_r 2 -beta_r 98 -alpha_rd 4 -beta_rd 12
+\end{lstlisting}
+The sequence file containing multiple sequences as a FASTA format should be provided with the option \textbf{-seqfile}. A seed for random generators can be provided with the option \textbf{-seed}. The number of iterations for sampling and the number of iterations to be skipped as burn-in can be provided by the options \textbf{-iterations} and \textbf{-burnin}, respectively. For example, with `-iterations 1000 -burnin 100', \textbf{BayesCAT} runs total 1100 iterations and skips the first 100 iterations as a burn-in. Among 1000 iterations, we can use only a subset of samples for inference. For example, `-samplingIV 10' indicates that \textbf{BayesCAT} uses every 10th sample from 1000 iterations after burn in for inference (total 100 samples). When \textbf{-burnin} and \textbf{-samplingIV} are not provided, \textbf{BayesCAT} sets up burnin as 10\% of iterations and samplingIV as min(number of iterations/1000, 1). Thus, as default, \textbf{BayesCAT} won't sample more than 1000. Prior distributions can be specified by using the options \textbf{-alpha_{\text{gamma}}} (prior on $\gamma$), \textbf{-alpha_{\text{kappa}}} (prior on $\kappa$), \textbf{-alpha_{\text{lambda}}} (prior on $\lambda$), \textbf{-alpha_{\text{A}}}, \textbf{-alpha_{\text{C}}}, \textbf{-alpha_{\text{G}}}, \textbf{-alpha_{\text{T}}} (prior on $\pi$), \textbf{-alpha_{\text{r}}}, \textbf{-beta_{\text{r}}} (prior on $r$), and \textbf{-alpha_{\text{rd}}}, \textbf{-beta_{\text{rd}}} (prior on $r_d$). 
+
+\section{How to summarize outputs from BayesCAT}
+\label{sec-5}
+\subsection{Summarize tree samples}
+\label{sec-5-1}
+`REStree' contains tree samples and we can summarize them using \textbf{summarize} for example
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+~/BayesCAT/bin/summarize REStree > tree.sum
+\end{lstlisting}
+'tree.sum' shows posterior probabilities for tree topologies and clades. Please see \href{http://badger.duq.edu/manual2/summarize.html}{manual for summarize} for more options and detailed description of their output. 
+
+\subsection{Summarize multiple sequence alignments}
+\label{sec-5-2}
+`RESAlignment' contains multiple sequence alignment samples. First, we convert multiple sequence alignment samples to pairwise alignment samples using perl script `compute.Pair.Post.Prob.pl' provided in `BayesCAT/scripts/perl/', for example,
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+perl ~/BayesCAT/scripts/perl/compute.Pair.Post.Prob.pl RESAlignment alignment.sum
+\end{lstlisting}
+Then, `alignment.sum' contains pairwise alignment samples. Now we can summarize/visualize multiple sequence alignment using the software package \textbf{FSA}. For example
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+~/tmp/fsa-1.15.9/src/main/fsa --gui --load-probs alignment.sum sequence.fasta
+\end{lstlisting}
+Then, we can see \textbf{FSA} generates two files, `sequence.fasta.probs' and `sequence.fasta.gui'. 
+Now we can summarize/visualize alignment samples using for example
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+java -jar ~/tmp/fsa-1.15.9/display/mad.jar sequence.fasta
+\end{lstlisting}
+Then, we can see image below on the screen:\\
+\includegraphics[width=.9\linewidth]{./fig/FSA.png}
+
+Please see \href{http://fsa.sourceforge.net/}{FSA website} for more options and detailed description of their output.
+
+\subsection{Summarize number of splits, edge length, and number of indel events}
+\label{sec-5-3}
+`RESmnumIinAll', `RESmnumDinAll', and `RESmedgeLen' contain number of insertion, number of deletion, and edge length for each (sampled) split. We can summarize them using a Script `get.summary.numID.edgelen.R' provided in `/BayesCAT/scripts/R/' for example
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+Rscript ~/BayesCAT/scripts/R/get.summary.numID.edgelen.R RESmnumIinAll RESmnumDinAll RESmedgeLen splits.sum 5
+\end{lstlisting}
+Here, 5 is number of sequences. The output file `split.sum' contains four columns. The first column is the split identifier. For example the identifier \textbf{11000} indicates the split which splits the first two sequences from the other three sequences. The second column contains a posterior probability for each split. The third and fourth columns contain posterior means of the number of indel events and the edge length given occurrence of each split.
+
+Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.numID.edgelen.R' for detailed explanation for usage and options.
+
+\subsection{Summarize indel fragment sizes}
+\label{sec-5-4}
+`RESIleninAll' and `RESDleninAll' contain samples of insertion and deletion fragment sizes. We can summarize them using a Script `get.summary.fragmentSize.R' provided in `/BayesCAT/scripts/R/' for example
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+Rscript ~/BayesCAT/scripts/R/get.summary.fragmentSize.R RESIleninAll RESDleninAll indel.len.sum
+\end{lstlisting}
+The output file `indel.len.sum' contains three rows, and each row contains a posterior estimate of realized indel (in the 1st row; realized insertion in the 2nd row; realized deletion in the 3rd row) fragment size distribution.
+
+Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.fragmentSize.R' for detailed explanation of usage.
+
+\subsection{Summarize parameters}
+\label{sec-5-5}
+`RESmGamma', `RESmKappa', `RESmP', `RESmLambda', `RESmMu', `RESmR', `RESmRi',  and `RESmRd' contain samples of parameters, $\gamma$, $\kappa$, $\pi$, $\lambda$, $\mu$, $r$, $r_i$, and $r_d$. We can summarize them using a Script `get.summary.param.R' provided in `/BayesCAT/scripts/R/' for example
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+Rscript ~/BayesCAT/scripts/R/get.summary.param.R RESmGamma gamma.sum 95 1
+Rscript ~/BayesCAT/scripts/R/get.summary.param.R RESmP pi.sum 95 4
+\end{lstlisting}
+The script takes three arguments (input file, creditable interval, and number of parameters in the input file). The first output file `gamma.sum' contains four columns: mean, median, and 95\% CI for $\gamma$. The second output file `pi.sum' contains four rows: each of rows contains mean, median, and 95\% CI for each of $\pi$. 
+
+Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.param.R' for detailed explanation of usage.
+
+\subsection{Summarize other quantities}
+\label{sec-5-6}
+`RESmnumD', `RESmnumI', and `RESmtotalEdgeLen' contain samples for number of deletion, number of insertion, and total sum of branch lengths in a tree. We can summarize (mean, median, CI) them using a script `get.summary.param.R'.
+
+\section{How to check if Markov Chain converges}
+\label{sec-6}
+We can run multiple Markov Chains with different seeds and check if Markov Chains converge using tree samples from multiple runs by \textbf{chart}. \textbf{chart} is part of \href{http://badger.duq.edu/}{the Badger software package} and one already has a binary executable file in `BayesCAT/bin/' directory if one followed instruction in the previous section. Suppose we run three Markov Chains with different seeds on directories `BayesCAT/test1/', `BayesCAT/test2/', and `BayesCAT/test3/'. First we summarize tree samples using \textbf{summarize} for example
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+cd ~/BayesCAT
+~/BayesCAT/bin/summarize test1/REStree > test1/tree.sum
+~/BayesCAT/bin/summarize test2/REStree > test2/tree.sum
+~/BayesCAT/bin/summarize test3/REStree > test3/tree.sum
+\end{lstlisting}
+Then, we can check if Markov Chain converges using those summary files for example
+\lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+~/BayesCAT/bin/chart test1/tree.sum test2/tree.sum test3/tree.sum
+\end{lstlisting}
+
+Please see \href{http://badger.duq.edu/manual2/chart.html}{manual for chart} for more options and detailed description of its output. 
+% Emacs 24.3.1 (Org mode 8.2.10)
+\end{document}

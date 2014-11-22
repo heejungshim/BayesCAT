@@ -44,7 +44,7 @@ See the [`NEWS`](https://github.com/heejungshim/BayesCAT/blob/master/NEWS) file.
 
 ## Bug reports
 
-Report bugs as issues on this repository or email the [mailing list](bayescatusers@googlegroups.com).
+Report bugs as issues on this repository or email the [mailing list](https://groups.google.com/forum/?hl=en#!forum/bayescatusers).
 
 ## How to cite WaveQTL
 

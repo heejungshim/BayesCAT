@@ -46,7 +46,7 @@ See the [`NEWS`](https://github.com/heejungshim/BayesCAT/blob/master/NEWS) file.
 
 Report bugs as issues on this repository or email the [mailing list](https://groups.google.com/forum/?hl=en#!forum/bayescatusers).
 
-## How to cite WaveQTL
+## How to cite BayesCAT
 
 Heejung Shim and Bret Larget (2014). [BayesCAT: Bayesian Co-estimation of Alignment and Tree](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper). Under review.
 

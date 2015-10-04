@@ -1,5 +1,5 @@
 
-This repository contains BayesCAT, a software package implementing a Bayesian Co-estimation of Alignment and Tree, described in [Shim and Larget 2014](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper).
+This repository contains BayesCAT, a software package implementing a Bayesian Co-estimation of Alignment and Tree, described in [Shim and Larget 2015](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper).
 
 BayesCAT used [HMMoC](http://bioinformatics.oxfordjournals.org/lookup/doi/10.1093/bioinformatics/btm350) to generate scripts implementing hidden Mark models. 
 
@@ -55,7 +55,7 @@ Report bugs as issues on this repository or email the [mailing list](https://gro
 
 ## How to cite BayesCAT
 
-Heejung Shim and Bret Larget (2014). [BayesCAT: Bayesian Co-estimation of Alignment and Tree](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper). Under review.
+Heejung Shim and Bret Larget (2015). [BayesCAT: Bayesian Co-estimation of Alignment and Tree](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper). Under review.
 
 ## Author
 

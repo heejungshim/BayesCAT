@@ -41,7 +41,7 @@ if(numParam == 1){
 }else{
   MCMCsamples = read.table(input.file)
   mean.out = apply(MCMCsamples, 2, mean)
-  quantile.sum = apply(MCMCsamples, 2, quantile, probs = c(lower.bound, 0.5, upper.bound))
+  quantile.sum = apply(MCMCsamples, 2, quantile, probs = c(0.5, lower.bound, upper.bound))
   out = matrix(data=NA, nc = 4, nr = numParam)
   out[,1] = t(mean.out)
   out[,2:4] = t(quantile.sum)

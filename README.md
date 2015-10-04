@@ -38,6 +38,11 @@ Then, binary executable file will be created in the `BayesCAT/src` directory.
 
 User manual is in the `BayesCAT/doc/manual` directory.
 
+## Analysis in Shim and Larget (2015)
+
+1. The main manuscript and supplementary materials of Shim and Larget (2015) are in the `BayesCAT/doc/paper` directory.
+2. We describe how to perform an analysis in Shim and Larget (2015) in the `BayesCAT/Shim_2015/analysis/` directory.
+
 ## News
 
 See the [`NEWS`](https://github.com/heejungshim/BayesCAT/blob/master/NEWS) file.

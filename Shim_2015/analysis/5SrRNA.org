@@ -1,4 +1,4 @@
-#+title: 5S rRNA analysis
+#+title: 5S rRNA analysis : scripts to replicate analysis in Shim 2015
 #+author: Heejung Shim
 
 #+latex_header: \usepackage{parskip}
@@ -11,7 +11,7 @@
 #+OPTIONS: ^:nil
 
 * Installation of software packages
-Plesae see BayesCAT Manual for installation of software packages relevant to our analysis including BayesCAT. BayesCAT Manual is available at 
+Please see BayesCAT Manual for installation of software packages relevant to our analysis including BayesCAT. BayesCAT Manual is available at 
 #+begin_src bash
 ~/BayesCAT/doc/manual/
 #+end_src
@@ -23,13 +23,14 @@ You can download data from [[https://github.com/bredelings/BAli-Phy/blob/master/
 #+end_src
 
 * Analysis 
-If you followed the instruction in [[https://github.com/heejungshim/BayesCAT][our github]], you already have BayesCAT installed and have binary executable file BayesCAT in the directory `BayesCAT/src/'. We start with making a directory to perform an analysis.
+If you followed the instruction in [[https://github.com/heejungshim/BayesCAT][our github]], you already have BayesCAT installed and have binary executable file BayesCAT in the directory `BayesCAT/src/' or `BayesCAT/bin/'. We start with making a directory to perform an analysis.
 #+BEGIN_SRC bash
 cd ~/BayesCAT
 mkdir Shim_2015/analysis/test
 cd Shim_2015/analysis/test
 #+END_SRC
 
+** Analysis of 5S rRNA
 We can run *BayesCAT* on 5S rRNA data, using a script  
 #+BEGIN_SRC bash
 /usr/bin/time -o time.txt -p ~/BayesCAT/bin/BayesCAT -seqfile ~/BayesCAT/Shim_2015/data/5SrRNA.fasta -seed 4 -iterations 1000000 -burnin 100000 -samplingIV 1000 -alpha_gamma 0.5 -alpha_kappa 0.5 -alpha_lambda 200 -alpha_A 13.3 -alpha_C 21.7 -alpha_G 23.1 -alpha_T 11.9 -alpha_r 100 -beta_r 12200 -alpha_rd 3 -beta_rd 15

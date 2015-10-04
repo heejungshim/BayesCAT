@@ -1,4 +1,4 @@
-% Created 2015-10-03 Sat 19:05
+% Created 2015-10-03 Sat 19:54
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -30,7 +30,7 @@
 \evensidemargin 0.5cm
 \author{Heejung Shim}
 \date{\today}
-\title{5S rRNA analysis}
+\title{5S rRNA analysis : scripts to replicate analysis in Shim 2015}
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
@@ -43,7 +43,7 @@
 
 \section{Installation of software packages}
 \label{sec-1}
-Plesae see BayesCAT Manual for installation of software packages relevant to our analysis including BayesCAT. BayesCAT Manual is available at 
+Please see BayesCAT Manual for installation of software packages relevant to our analysis including BayesCAT. BayesCAT Manual is available at 
 \lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
 \begin{lstlisting}
 ~/BayesCAT/doc/manual/
@@ -59,7 +59,7 @@ You can download data from \href{https://github.com/bredelings/BAli-Phy/blob/mas
 
 \section{Analysis}
 \label{sec-3}
-If you followed the instruction in \href{https://github.com/heejungshim/BayesCAT}{our github}, you already have BayesCAT installed and have binary executable file BayesCAT in the directory `BayesCAT/src/'. We start with making a directory to perform an analysis.
+If you followed the instruction in \href{https://github.com/heejungshim/BayesCAT}{our github}, you already have BayesCAT installed and have binary executable file BayesCAT in the directory `BayesCAT/src/' or `BayesCAT/bin/'. We start with making a directory to perform an analysis.
 \lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
 \begin{lstlisting}
 cd ~/BayesCAT
@@ -67,6 +67,8 @@ mkdir Shim_2015/analysis/test
 cd Shim_2015/analysis/test
 \end{lstlisting}
 
+\subsection{Analysis of 5S rRNA}
+\label{sec-3-1}
 We can run \textbf{BayesCAT} on 5S rRNA data, using a script  
 \lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
 \begin{lstlisting}
@@ -74,7 +76,7 @@ We can run \textbf{BayesCAT} on 5S rRNA data, using a script
 \end{lstlisting}
 
 \subsection{Summarize tree samples}
-\label{sec-3-1}
+\label{sec-3-2}
 `REStree' contains tree samples and we can summarize them using \textbf{summarize} for example
 \lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
 \begin{lstlisting}
@@ -95,7 +97,7 @@ Inside of tree.sum:
 \end{lstlisting}
 
 \subsection{Summarize multiple sequence alignments}
-\label{sec-3-2}
+\label{sec-3-3}
 `RESAlignment' contains multiple sequence alignment samples. First, we convert multiple sequence alignment samples to pairwise alignment samples using perl script `compute.Pair.Post.Prob.pl' provided in `BayesCAT/scripts/perl/', for example,
 \lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
 \begin{lstlisting}
@@ -118,7 +120,7 @@ java -jar ~/tmp/fsa-1.15.9/display/mad.jar 5SrRNA.fasta
 Please see \href{http://fsa.sourceforge.net/}{FSA website} for more options and detailed description of their output.
 
 \subsection{Summarize number of splits, edge length, and number of indel events}
-\label{sec-3-3}
+\label{sec-3-4}
 `RESmnumIinAll', `RESmnumDinAll', and `RESmedgeLen' contain number of insertion, number of deletion, and edge length for each (sampled) split. We can summarize them using a Script `get.summary.numID.edgelen.R' provided in `/BayesCAT/scripts/R/' for example
 \lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
 \begin{lstlisting}
@@ -151,7 +153,7 @@ The first column is the split identifier. For example the identifier \textbf{110
 Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.numID.edgelen.R' for detailed explanation for usage and options.
 
 \subsection{Summarize indel fragment sizes}
-\label{sec-3-4}
+\label{sec-3-5}
 `RESIleninAll' and `RESDleninAll' contain samples of insertion and deletion fragment sizes. We can summarize them using a Script `get.summary.fragmentSize.R' provided in `/BayesCAT/scripts/R/' for example
 \lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
 \begin{lstlisting}
@@ -162,7 +164,7 @@ The output file `indel.len.sum' contains three rows, and each row contains a pos
 Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.fragmentSize.R' for detailed explanation of usage.
 
 \subsection{Summarize parameters}
-\label{sec-3-5}
+\label{sec-3-6}
 `RESmGamma', `RESmKappa', `RESmP', `RESmLambda', `RESmMu', `RESmR', `RESmRi',  and `RESmRd' contain samples of parameters, $\gamma$, $\kappa$, $\pi$, $\lambda$, $\mu$, $r$, $r_i$, and $r_d$. We can summarize them using a Script `get.summary.param.R' provided in `/BayesCAT/scripts/R/' for example
 \lstset{breaklines=true,showspaces=false,showtabs=false,tabsize=2,basicstyle=\ttfamily,frame=single,keywordstyle=\color{Blue},stringstyle=\color{BrickRed},commentstyle=\color{ForestGreen},columns=fullflexible,language=bash,label= ,caption= ,numbers=none}
 \begin{lstlisting}
@@ -187,7 +189,7 @@ The second output file `pi.sum' contains four rows: each of rows contains mean, 
 Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.param.R' for detailed explanation of usage.
 
 \subsection{Summarize other quantities}
-\label{sec-3-6}
+\label{sec-3-7}
 `RESmnumD', `RESmnumI', and `RESmtotalEdgeLen' contain samples for number of deletion, number of insertion, and total sum of branch lengths in a tree. We can summarize (mean, median, CI) them using a script `get.summary.param.R'.
 % Emacs 24.3.1 (Org mode 8.2.10)
 \end{document}

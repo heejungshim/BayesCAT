@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>5S rRNA analysis</title>
+<!-- 2015-10-03 Sat 19:05 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Heejung Shim" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">5S rRNA analysis</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Installation of software packages</a></li>
+<li><a href="#sec-2">2. 5S rRNA data</a></li>
+<li><a href="#sec-3">3. Analysis</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Summarize tree samples</a></li>
+<li><a href="#sec-3-2">3.2. Summarize multiple sequence alignments</a></li>
+<li><a href="#sec-3-3">3.3. Summarize number of splits, edge length, and number of indel events</a></li>
+<li><a href="#sec-3-4">3.4. Summarize indel fragment sizes</a></li>
+<li><a href="#sec-3-5">3.5. Summarize parameters</a></li>
+<li><a href="#sec-3-6">3.6. Summarize other quantities</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Installation of software packages</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Plesae see BayesCAT Manual for installation of software packages relevant to our analysis including BayesCAT. BayesCAT Manual is available at 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">~/BayesCAT/doc/manual/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 5S rRNA data</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+You can download data from <a href="https://github.com/bredelings/BAli-Phy/blob/master/examples/Sequences/5S-rRNA/5d.fasta">BAli-Phy repository</a>. Downloaded (and modified) 5S rRNA data is also provided in 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">~/BayesCAT/Shim_2015/data/5SrRNA.fasta
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Analysis</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+If you followed the instruction in <a href="https://github.com/heejungshim/BayesCAT">our github</a>, you already have BayesCAT installed and have binary executable file BayesCAT in the directory `BayesCAT/src/'. We start with making a directory to perform an analysis.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">cd ~/BayesCAT
+mkdir Shim_2015/analysis/test
+cd Shim_2015/analysis/test
+</pre>
+</div>
+
+<p>
+We can run <b>BayesCAT</b> on 5S rRNA data, using a script  
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">/usr/bin/time -o time.txt -p ~/BayesCAT/bin/BayesCAT -seqfile ~/BayesCAT/Shim_2015/data/5SrRNA.fasta -seed 4 -iterations 1000000 -burnin 100000 -samplingIV 1000 -alpha_gamma 0.5 -alpha_kappa 0.5 -alpha_lambda 200 -alpha_A 13.3 -alpha_C 21.7 -alpha_G 23.1 -alpha_T 11.9 -alpha_r 100 -beta_r 12200 -alpha_rd 3 -beta_rd 15
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Summarize tree samples</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+`REStree' contains tree samples and we can summarize them using <b>summarize</b> for example
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">~/BayesCAT/bin/summarize REStree &gt; tree.sum
+</pre>
+</div>
+
+<p>
+Inside of tree.sum:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">205  A1   ((((1,2),3),4),5)
+170  A1   (((1,2),(3,4)),5)
+131  A1   (((1,(2,3)),4),5)
+109  A1   ((1,((2,3),4)),5)
+205  0.205  0.205 A1
+170  0.170  0.375 A2
+131  0.131  0.506 A3
+109  0.109  0.615 A4
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Summarize multiple sequence alignments</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+`RESAlignment' contains multiple sequence alignment samples. First, we convert multiple sequence alignment samples to pairwise alignment samples using perl script `compute.Pair.Post.Prob.pl' provided in `BayesCAT/scripts/perl/', for example,
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">perl ~/BayesCAT/scripts/perl/compute.Pair.Post.Prob.pl RESAlignment alignment.sum
+</pre>
+</div>
+
+<p>
+Then, `alignment.sum' contains pairwise alignment samples. Now we can summarize/visualize multiple sequence alignment using the software package <b>FSA</b>. For example
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">cp ~/BayesCAT/Shim_2015/data/5SrRNA.fasta .
+~/tmp/fsa-1.15.9/src/main/fsa --gui --load-probs alignment.sum 5SrRNA.fasta
+</pre>
+</div>
+
+<p>
+Then, we can see <b>FSA</b> generates two files, `5SrRNA.fasta.probs' and `5SrRNA.fasta.gui'. Now we can summarize/visualize alignment samples using for example
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">java -jar ~/tmp/fsa-1.15.9/display/mad.jar 5SrRNA.fasta
+</pre>
+</div>
+
+<p>
+Please see <a href="http://fsa.sourceforge.net/">FSA website</a> for more options and detailed description of their output.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Summarize number of splits, edge length, and number of indel events</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+`RESmnumIinAll', `RESmnumDinAll', and `RESmedgeLen' contain number of insertion, number of deletion, and edge length for each (sampled) split. We can summarize them using a Script `get.summary.numID.edgelen.R' provided in `/BayesCAT/scripts/R/' for example
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">Rscript ~/BayesCAT/scripts/R/get.summary.numID.edgelen.R RESmnumIinAll RESmnumDinAll RESmedgeLen splits.sum 5
+</pre>
+</div>
+<p>
+Here, 5 is number of sequences. 
+</p>
+
+<p>
+The output file `split.sum' contains four columns as follows.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">split numS.PP numID.PP edgelen.PP
+10000 1 2.306 0.456168202
+01000 1 3.54 0.464030069
+00100 1 2.755 0.2641869629
+00010 1 0.856 0.14698279726
+00001 1 3.36 0.365654439
+11000 0.414 0.161835748792271 0.112243413346135
+10100 0.083 0.337349397590361 0.0464148006144578
+10010 0.126 0.111111111111111 0.0804714332539682
+10001 0.168 0.553571428571429 0.075931275297619
+01100 0.305 0.380327868852459 0.111992973114754
+01010 0.007 0 0.02506153
+01001 0.161 0.372670807453416 0.0966510042608696
+00110 0.303 0.0429042904290429 0.0904554959570957
+00101 0.053 0.264150943396226 0.0442573445283019
+00011 0.38 0.415789473684211 0.105108727868947
+</pre>
+</div>
+<p>
+The first column is the split identifier. For example the identifier <b>11000</b> indicates the split which splits the first two sequences from the other three sequences. The second column contains a posterior probability for each split. The third and fourth columns contain posterior means of the number of indel events and the edge length given occurrence of each split.
+</p>
+
+<p>
+Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.numID.edgelen.R' for detailed explanation for usage and options.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Summarize indel fragment sizes</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+`RESIleninAll' and `RESDleninAll' contain samples of insertion and deletion fragment sizes. We can summarize them using a Script `get.summary.fragmentSize.R' provided in `/BayesCAT/scripts/R/' for example
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">Rscript ~/BayesCAT/scripts/R/get.summary.fragmentSize.R RESIleninAll RESDleninAll indel.len.sum
+</pre>
+</div>
+<p>
+The output file `indel.len.sum' contains three rows, and each row contains a posterior estimate of realized indel (in the 1st row; realized insertion in the 2nd row; realized deletion in the 3rd row) fragment size distribution.
+</p>
+
+<p>
+Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.fragmentSize.R' for detailed explanation of usage.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Summarize parameters</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+`RESmGamma', `RESmKappa', `RESmP', `RESmLambda', `RESmMu', `RESmR', `RESmRi',  and `RESmRd' contain samples of parameters, \(\gamma\), \(\kappa\), \(\pi\), \(\lambda\), \(\mu\), \(r\), \(r_i\), and \(r_d\). We can summarize them using a Script `get.summary.param.R' provided in `/BayesCAT/scripts/R/' for example
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">Rscript ~/BayesCAT/scripts/R/get.summary.param.R RESmGamma gamma.sum 95 1
+Rscript ~/BayesCAT/scripts/R/get.summary.param.R RESmP pi.sum 95 4
+</pre>
+</div>
+<p>
+The script takes three arguments (input file, creditable interval, and number of parameters in the input file). The first output file `gamma.sum' contains four columns: mean, median, and 95% CI for \(\gamma\) as follows:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">3.589903 3.40015 1.540043 6.607065
+</pre>
+</div>
+
+<p>
+The second output file `pi.sum' contains four rows: each of rows contains mean, median, and 95% CI for each of \(\pi\) as follows:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">0.173097312 0.172911 0.164125825 0.1852387
+0.324600251 0.3225895 0.306639825 0.348690725
+0.336307983 0.339181 0.3121102 0.34709065
+0.165994433 0.1626005 0.150785525 0.186221475
+</pre>
+</div>
+
+<p>
+Please see the description at the beginning of the script `/BayesCAT/scripts/R/get.summary.param.R' for detailed explanation of usage.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Summarize other quantities</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+`RESmnumD', `RESmnumI', and `RESmtotalEdgeLen' contain samples for number of deletion, number of insertion, and total sum of branch lengths in a tree. We can summarize (mean, median, CI) them using a script `get.summary.param.R'.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Heejung Shim</p>
+<p class="date">Created: 2015-10-03 Sat 19:05</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

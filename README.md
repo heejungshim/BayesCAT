@@ -57,6 +57,6 @@ Heejung Shim and Bret Larget (2014). [BayesCAT: Bayesian Co-estimation of Alignm
 
 ## Author
 
-[Heejung Shim](https://github.com/heejungshim) (University of Chicago)
+[Heejung Shim](https://github.com/heejungshim) (Purdue University)
 
 

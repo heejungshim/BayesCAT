@@ -1,7 +1,7 @@
 
 This repository contains BayesCAT, a software package implementing a Bayesian Co-estimation of Alignment and Tree, described in [Shim and Larget 2015](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper).
 
-BayesCAT used [HMMoC](http://bioinformatics.oxfordjournals.org/lookup/doi/10.1093/bioinformatics/btm350) to generate scripts implementing hidden Mark models. 
+BayesCAT used [HMMoC](http://bioinformatics.oxfordjournals.org/lookup/doi/10.1093/bioinformatics/btm350) to generate scripts implementing hidden Markov models. 
 
 BayesCAT is a free software, you can redistribute it and/or modify it under
 the terms of the GNU General Public License (GPLv3+).

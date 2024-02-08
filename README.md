@@ -1,5 +1,5 @@
 
-This repository contains BayesCAT, a software package implementing a Bayesian Co-estimation of Alignment and Tree, described in [Shim and Larget 2015](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper).
+This repository contains BayesCAT, a software package implementing a Bayesian Co-estimation of Alignment and Tree, described in [Shim and Larget 2017](https://pubmed.ncbi.nlm.nih.gov/28099991/).
 
 BayesCAT used [HMMoC](http://bioinformatics.oxfordjournals.org/lookup/doi/10.1093/bioinformatics/btm350) to generate scripts implementing hidden Markov models. 
 
@@ -40,10 +40,10 @@ Then, binary executable file will be created in the `BayesCAT/src` directory.
 
 User manual is in the `BayesCAT/doc/manual` directory.
 
-## Analysis in Shim and Larget (2015)
+## Analysis in Shim and Larget (2017)
 
-1. The main manuscript and supplementary materials of Shim and Larget (2015) are in the `BayesCAT/doc/paper` directory.
-2. We describe how to perform an analysis in Shim and Larget (2015) in the `BayesCAT/Shim_2015/analysis/` directory.
+1. The main manuscript and supplementary materials of Shim and Larget (2017) are in the `BayesCAT/doc/paper` directory.
+2. We describe how to perform an analysis in Shim and Larget (2017) in the `BayesCAT/Shim_2015/analysis/` directory.
 
 ## News
 
@@ -55,10 +55,10 @@ Report bugs as issues on this repository or email the [mailing list](https://gro
 
 ## How to cite BayesCAT
 
-Heejung Shim and Bret Larget (2015). [BayesCAT: Bayesian Co-estimation of Alignment and Tree](https://github.com/heejungshim/BayesCAT/tree/master/doc/paper). Under review.
+Heejung Shim and Bret Larget (2017). [BayesCAT: Bayesian Co-estimation of Alignment and Tree](https://pubmed.ncbi.nlm.nih.gov/28099991/). Biometrics.
 
 ## Author
 
-[Heejung Shim](https://github.com/heejungshim) (Purdue University)
+[Heejung Shim](https://github.com/heejungshim) (University of Melbourne)
 
 
